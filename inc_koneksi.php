@@ -1,11 +1,3 @@
 <?php
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "ppdb";
-
-$koneksi = mysqli_connect($db_host, $db_user, $db_pass,$db_name);
-if(!$koneksi){
-    die("Koneksi gagal");
-}
-    
+session_start();
+$conn = mysqli_connect("localhost", "root", "", "ppdb");

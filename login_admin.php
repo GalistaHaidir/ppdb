@@ -14,7 +14,7 @@ if (isset($_POST['login'])) {
         $q1 = mysqli_query($koneksi, $sql1);
         $r1 = mysqli_fetch_array($q1);
         if ($r1['password'] != md5($password)) {
-            $err .= "<li>Akun tidak ditemukan</li>"; 
+            $err .= "<li>Akun tidak ditemukan</li>";
         }
     }
     if (empty($err)) {
@@ -43,11 +43,6 @@ if (isset($_POST['login'])) {
 <body oncontextmenu='return false' class='snippet-body'>
     <section class="body">
         <div class="container">
-        <?php
-        if($err){
-            echo"<ul>$err</ul>";
-        }
-        ?>
             <div class="login-box">
                 <div class="row">
                     <div class="col-sm-6">
@@ -62,14 +57,21 @@ if (isset($_POST['login'])) {
                         <h3 class="header-title">LOGIN</h3>
                         <form class="login-form" action="" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="UserName" value="<?php echo $username?>"name="username">
+                                <input type="text" class="form-control" placeholder="UserName"
+                                    value="<?php echo $username ?>" name="username">
                             </div>
                             <div class="form-group">
                                 <input type="Password" class="form-control" placeholder="Password" name="password">
                             </div>
                             <div class="form-group">
-                                <button type="submit" name="login" value="login" class="btn btn-primary btn-block">LOGIN</button>
+                                <button type="submit" name="login" value="login"
+                                    class="btn btn-primary btn-block">LOGIN</button>
                             </div>
+                            <?php
+                            if ($err) {
+                                echo "<ul>$err</ul>";
+                            }
+                            ?>
                         </form>
                     </div>
                     <div class="col-sm-6 hide-on-mobile">
