@@ -1,8 +1,5 @@
 <?php
 require 'inc_koneksi.php';
-if (!empty($_SESSION["id_user"])) {
-    header("Location: admin_page.php");
-}
 if (isset($_POST["submit"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
@@ -74,7 +71,7 @@ if (isset($_POST["submit"])) {
                                 <button type="submit" name="submit" class="btn btn-primary btn-block">Daftar</button>
                             </div>
                             <div class="form-group">
-                                <div class="text-center">Sudah Punya Member? <a href="#!">Masuk Sekarang</a></div>
+                                <div class="text-center">Sudah Punya Member? <a href="login_user.php">Masuk Sekarang</a></div>
                             </div>
                         </form>
                     </div>

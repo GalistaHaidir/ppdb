@@ -1,40 +1,35 @@
 <?php
-include("inc_koneksi.php");
-$username = "";
-$password = "";
-$err = "";
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if ($username == '' or $password == '') {
-        $err .= "<li>Silahkan masukkan username dan password</li>";
-    }
-    if (empty($err)) {
-        $sql1 = "select * from petugas where username = '$username'";
-        $q1 = mysqli_query($koneksi, $sql1);
-        $r1 = mysqli_fetch_array($q1);
-        if ($r1['password'] != md5($password)) {
-            $err .= "<li>Akun tidak ditemukan</li>";
+require 'inc_koneksi.php';
+if (isset($_POST["submit"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $result = mysqli_query($conn, "SELECT * FROM petugas WHERE username = '$username'");
+    $row = mysqli_fetch_assoc($result);
+    if (mysqli_num_rows($result) > 0) {
+        if ($password == $row["password"]) {
+            $_SESSION["login"] = true;
+            $_SESSION["id_user"] = $row["id_user"];
+            header("location: admin_page.php");
+        } else {
+            echo "<script>alert ('Wrong Password')</script>";
         }
-    }
-    if (empty($err)) {
-        $_SESSION['petugas_username'] = $username;
-        header("location:admin_page.php");
-        exit();
+    } else {
+        echo "<script>('User Not Registeret')</script>";
     }
 }
 ?>
-
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Snippet - GoSNippets</title>
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css' rel='stylesheet'>
     <link href='' rel='stylesheet'>
     <link rel="stylesheet" href="css/stylelogadmin.css">
     <script type='text/javascript' src=''></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
     <script type='text/javascript'
         src='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js'></script>
@@ -47,33 +42,30 @@ if (isset($_POST['login'])) {
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="logo">
-                            <span class="logo-font">Hi</span>Admin
+                            <span class="logo-font">Hi</span>Guys
                         </div>
                     </div>
                 </div>
+                <!--awal-->
                 <div class="row">
                     <div class="col-sm-6">
-                        <br>
-                        <h3 class="header-title">LOGIN</h3>
-                        <form class="login-form" action="" method="post">
+                        <br>`
+                        <h3 class="header-title">Login</h3>
+                        <form class="login-form" id="form" method="post" autocomplete="off">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="UserName"
-                                    value="<?php echo $username ?>" name="username">
+                                <input type="text" name="username" class="form-control" placeholder="username"
+                                    id="username" required value="">
                             </div>
                             <div class="form-group">
-                                <input type="Password" class="form-control" placeholder="Password" name="password">
+                                <input type="Password" name="password" class="form-control" placeholder="Password"
+                                    id="password" required value="">
                             </div>
                             <div class="form-group">
-                                <button type="submit" name="login" value="login"
-                                    class="btn btn-primary btn-block">LOGIN</button>
+                                <button type="submit" name="submit" class="btn btn-primary btn-block">Login</button>
                             </div>
-                            <?php
-                            if ($err) {
-                                echo "<ul>$err</ul>";
-                            }
-                            ?>
                         </form>
                     </div>
+                    <!--akhir-->
                     <div class="col-sm-6 hide-on-mobile">
                         <div id="demo" class="carousel slide" data-ride="carousel">
                             <!-- Indicators -->
@@ -113,5 +105,6 @@ if (isset($_POST['login'])) {
             </div>
         </div>
     </section>
-    <script type='text/javascript'></script>
 </body>
+
+</html>
