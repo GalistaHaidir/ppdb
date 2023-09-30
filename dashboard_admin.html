@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--css-->
+    <link rel="stylesheet" href="css/style.css">
+    <!--icons-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Formulir Siswa</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nama-logo">
+            <div class="gambar-logo">
+                <img src="css/kemdikbud.png" alt="logo">
+            </div>
+
+            <span class="nama_logo">Web PPDB</span>
+        </div>
+
+        <div class="item-menu">
+            <ul class="nav-links">
+                <li>
+                    <a href="dashboard_admin.html">
+                        <i class='bx bx-home-heart'></i>
+                        <span class="link-nama">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="data_pendaftar.html">
+                        <i class='bx bx-edit-alt'></i>
+                        <span class="link-nama">Data Pendaftar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="administrasi_admin.html">
+                        <i class='bx bx-wallet'></i>
+                        <span class="link-nama">Administrasi</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="bagian-logout">
+                <li>
+                    <a href="#">
+                        <i class='bx bx-log-out'></i>
+                        <span class="link-nama">LogOut</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class='bx bx-moon'></i>
+                        <span class="link-nama">Dark Mode</span>
+                    </a>
+
+                    <div class="alih-mode">
+                        <span class="ganti"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <i class='bx bx-menu sidebar-alih'></i>
+        <div class="main--content">
+            <div class="header--wrapper">
+                <div class="header--title">
+                    <span>Admin</span>
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="user--info">
+                    <img src="css/admin_profile.png" alt="profile">
+                </div>
+            </div>
+            <div class="card--container">
+                <h3 class="main--title">Jalur Penerimaan</h3>
+                <div class="card--wrapper">
+                    <div class="payment--card">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">
+                                    Zonasi
+                                </span>
+                                <span class="amount-value">Kuota = </span>
+                            </div>
+                            <i class='bx bx-map-alt icon dark-brown'></i>
+                        </div>
+                        <span class="card-detail">Data Masuk = 1</span>
+                    </div>
+
+                    <div class="payment--card light-grey">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">
+                                    Prestasi
+                                </span>
+                                <span class="amount-value">Kuota = </span>
+                            </div>
+                            <i class='bx bxs-graduation icon dark-grey'></i>
+                        </div>
+                        <span class="card-detail">Data Masuk = </span>
+                    </div>
+
+                    <div class="payment--card light-yellow">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">
+                                    Afirmasi
+                                </span>
+                                <span class="amount-value">Kuota = </span>
+                            </div>
+                            <i class='bx bxs-id-card icon dark-yellow'></i>
+                        </div>
+                        <span class="card-detail">Data Masuk = </span>
+                    </div>
+
+                    <div class="payment--card light-purple">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">
+                                    Perpindahan
+                                </span>
+                                <span class="amount-value">Kuota = </span>
+                            </div>
+                            <i class='bx bx-transfer icon dark-purple'></i>
+                        </div>
+                        <span class="card-detail">Data Masuk =</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tabular--wrapper">
+                <h3 class="main--title">Data</h3>
+                <div class="card--wrapper">
+                    <div class="payment--card light-red">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">
+                                    Total Pendaftar
+                                </span>
+                                <span class="amount-value">2</span>
+                            </div>
+                            <i class='bx bxs-user icon dark-red'></i>
+                        </div>
+                    </div>
+
+
+                    <div class="payment--card light-blue">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">
+                                    Pendaftar sudah diverifikasi
+                                </span>
+                                <span class="amount-value">5</span>
+                            </div>
+                            <i class='bx bxs-user-check icon dark-blue'></i>
+                        </div>
+                    </div>
+
+                    <div class="payment--card light-green">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">
+                                    Pendaftar belum Daftar Ulang
+                                </span>
+                                <span class="amount-value">3</span>
+                            </div>
+                            <i class='bx bx-dollar icon dark-green'></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!--script-->
+    <script src="script1.js"></script>
+</body>
+
+</html>

@@ -5,97 +5,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/styledashboard.css">
-
+    <!--css-->
+    <link rel="stylesheet" href="css/style.css">
+    <!--icons-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Dashboard</title>
+
+    <title>Formulir Siswa</title>
 </head>
 
 <body>
-    <nav class="sidebar close">
-        <header>
-            <div class="image-text">
-                <span class="image">
-                    <img src="css/logo.png" alt="logo">
-                </span>
-
-                <div class="text header-text">
-                    <span class="name">CodingPPDB</span>
-                    <span class="profession">Web Developer</span>
-                </div>
+    <nav>
+        <div class="nama-logo">
+            <div class="gambar-logo">
+                <img src="css/kemdikbud.png" alt="logo">
             </div>
 
-            <i class='bx bxs-right-arrow-circle toggle'></i>
-        </header>
+            <span class="nama_logo">Web PPDB</span>
+        </div>
 
-        <div class="menu-bar">
-            <div class="menu">
-                <li class="search-box">
-                    <i class='bx bx-search icon'></i>
-                    <input type="text" placeholder="Search...">
+        <div class="item-menu">
+            <ul class="nav-links">
+                <li>
+                    <a href="#">
+                        <i class='bx bx-home-heart'></i>
+                        <span class="link-nama">Home</span>
+                    </a>
                 </li>
-                <ul class="menu-links">
-                    <li class="nav-link">
-                        <a href="">
-                            <i class='bx bx-home-heart icon'></i>
-                            <span class="text nav-text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="">
-                            <i class='bx bx-bar-chart-alt-2 icon'></i>
-                            <span class="text nav-text">Revenue</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Notification</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="">
-                            <i class='bx bx-heart icon'></i>
-                            <span class="text nav-text">Analytics</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
-                        <a href="">
-                            <i class='bx bx-wallet icon'></i>
-                            <span class="text nav-text">Wallets</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-edit-alt'></i>
+                        <span class="link-nama">Data Formulir</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-file-pdf'></i>
+                        <span class="link-nama">Berkas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-wallet'></i>
+                        <span class="link-nama">Pembayaran</span>
+                    </a>
+                </li>
+            </ul>
 
-            <div class="bottom-content">
-                <li class="nav-link">
-                    <a href="">
-                        <i class='bx bx-log-out icon'></i>
-                        <span class="text nav-text">LogOut</span>
+            <ul class="bagian-logout">
+                <li>
+                    <a href="#">
+                        <i class='bx bx-log-out'></i>
+                        <span class="link-nama">LogOut</span>
                     </a>
                 </li>
 
                 <li class="mode">
-                    <div class="moon-sun">
-                        <i class='bx bx-moon icon moon' ></i>
-                        <i class='bx bx-sun icon sun' ></i>
-                    </div>
-                    <span class="mode-text text">Dark Mode</span>
+                    <a href="#">
+                        <i class='bx bx-moon'></i>
+                        <span class="link-nama">Dark Mode</span>
+                    </a>
 
-                    <div class="toggle-switch">
-                        <span class="switch"></span>
+                    <div class="alih-mode">
+                        <span class="ganti"></span>
                     </div>
                 </li>
-            </div>
+            </ul>
         </div>
     </nav>
 
-    <section class="home">
-        <div class="text">Dashboard</div>
+    <section class="dashboard">
+        <div class="top">
+            <i class='bx bx-menu sidebar-alih'></i>
+
+            <div class="kotak-pencarian">
+                <i class='bx bx-search-alt' ></i>
+                <input type="text" placeholder="Search here..." id="">
+            </div>
+            
+            <img src="css/admin_profile.png" alt="profile">
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class='bx bx-tachometer'></i>
+                    <span class="text">Dashboard</span>
+                </div>
+
+                <div class="boxes">
+                    <div class="box box1">
+                        <i class='bx bx-message-add'></i>
+                        <span class="text">Jumlah Pendaftar</span>
+                        <span class="number">50,120</span>
+                    </div>
+
+                    <div class="box box2">
+                        <i class='bx bx-check-square' ></i>
+                        <span class="text">Sudah Diterima</span>
+                        <span class="number">50,120</span>
+                    </div>
+
+                    <div class="box box3">
+                        <i class='bx bx-message-rounded-error' ></i>
+                        <span class="text">Belum Diterima</span>
+                        <span class="number">50,120</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity">
+                <div class="title">
+                    <i class='bx bx-time-five' ></i>
+                    <span class="text">Recent activity</span>
+                </div>
+
+                <div class="activity-data">
+                    <div class="data names">
+                        <span class="data-title">None</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                    </div>
+                    <div class="data email">
+                        <span class="data-title">Email</span>
+                        <span class="data-list">galisputragemilang@gmai.com</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                    </div>
+                    <div class="data joined">
+                        <span class="data-title">Joined</span>
+                        <span class="data-list">2022-02-12</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                    </div>
+                    <div class="data type">
+                        <span class="data-title">Type</span>
+                        <span class="data-list">new</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                    </div>
+                    <div class="data status">
+                        <span class="data-title">Status</span>
+                        <span class="data-list">Liked</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                        <span class="data-list">Prem Sahi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <script src="script.js"></script>
+    <!--script-->
+    <script src="script1.js"></script>
 </body>
 
 </html>
