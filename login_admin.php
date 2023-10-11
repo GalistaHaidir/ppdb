@@ -1,15 +1,15 @@
 <?php
 require 'inc_koneksi.php';
 if (isset($_POST["submit"])) {
-    $username = $_POST["username"];
+    $username_petugas = $_POST["username_petugas"];
     $password = $_POST["password"];
-    $result = mysqli_query($conn, "SELECT * FROM petugas WHERE username = '$username'");
+    $result = mysqli_query($conn, "SELECT * FROM petugas WHERE username_petugas = '$username_petugas'");
     $row = mysqli_fetch_assoc($result);
     if (mysqli_num_rows($result) > 0) {
         if ($password == $row["password"]) {
             $_SESSION["login"] = true;
             $_SESSION["id_user"] = $row["id_user"];
-            header("location: admin_page.php");
+            header("location: ../../admin/dashboard/dashboard_admin.html");
         } else {
             echo "<script>alert ('Wrong Password')</script>";
         }
@@ -53,8 +53,8 @@ if (isset($_POST["submit"])) {
                         <h3 class="header-title">Login</h3>
                         <form class="login-form" id="form" method="post" autocomplete="off">
                             <div class="form-group">
-                                <input type="text" name="username" class="form-control" placeholder="username"
-                                    id="username" required value="">
+                                <input type="text" name="username_petugas" class="form-control" placeholder="username_petugas"
+                                    id="username_petugas" required value="">
                             </div>
                             <div class="form-group">
                                 <input type="Password" name="password" class="form-control" placeholder="Password"
