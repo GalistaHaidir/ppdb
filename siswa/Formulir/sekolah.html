@@ -15,11 +15,6 @@
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
-
-    <!-- TABLE -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
-
 </head>
 
 <body>
@@ -38,27 +33,33 @@
             </div>
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../Dashboard/dashboard_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Dashboard/dashboardsiswa.html" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-house-door-fill"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="">
-                    <a href="../DataPendaftar/datapendaftar.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="biodata.html" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
-                        Data Pendaftar
+                        Data Diri
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/administrasi_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="orangtua.html" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-calculator"></i>
-                        Pembayaran
+                        Data Orang Tua
                     </a>
                 </li>
                 <li class="active">
-                    <a href="../Administrasi/datapembayaran.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="sekolah.html" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
-                        Data Pembayaran
+                        Data Asal Sekolah
+                    </a>
+                </li>
+                <li class="">
+                    <a href="datacalonsiswa.html" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-clipboard-data"></i>
+                        Berkas
                     </a>
                 </li>
             </ul>
@@ -97,7 +98,7 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link disabled" aria-current="page" href="#">Data Pendaftar</a>
+                                <a class="nav-link disabled" aria-current="page" href="#">Dashboard</a>
                             </li>
                         </ul>
                     </div>
@@ -105,50 +106,46 @@
             </nav>
 
             <!-- TABLE -->
-            <!-- TABLE -->
             <div class="container">
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <h1 class="display-4"><b>Data Pembayaran</b></h1>
-                        <table id="example" class="display nowrap" style="max-width: 95%;">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011-04-25</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary">Primary</button>
-                                        <button type="button" class="btn btn-primary">Primary</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                <div class="col-md my-4 mx-2">
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-person-plus"></i>&nbsp;Data Diri Siswa
+                    </h3>
+                </div>
+                <hr>
+
+                <div class="col-md my-2 mx-2">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="npsn" class="form-label">NPSN Asal Sekolah</label>
+                            <input type="number" class="form-control w-50" id="npsn" placeholder="Masukkan NPSN" name="npsn"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nama_sekolah" class="form-label">Nama Asal Sekolah</label>
+                            <input type="text" class="form-control form-control-md w-50" id="nama_sekolah"
+                                placeholder="Masukkan Nama Asal Sekolah" name="nama_sekolah" autocomplete="off" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="alamat_asalsekolah" class="form-label">Alamat Asal Sekolah</label>
+                            <textarea class="form-control w-50" id="alamat_asalsekolah" rows="5" name="alamat_asalsekolah"
+                                placeholder="Masukkan Alamat Asal Sekolah" autocomplete="off" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telepon_asalsekolah" class="form-label">Telepon Asal Sekolah</label>
+                            <input type="text" class="form-control form-control-md w-50" id="telepon_asalsekolah"
+                                placeholder="Masukkan No. Telepon Asal Sekolah" name="no_telepon_asalsekolahhp"
+                                autocomplete="off" required>
+                        </div>
+                        <hr>
+                        <a href="dataguru.php" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                    </form>
                 </div>
             </div>
+
+
         </div>
+    </div>
     </div>
 
     <!-- BOOTSTRAP JS-->
@@ -170,27 +167,6 @@
 
         $('.close-btn').on('click', function () {
             $('.sidebar').removeClass('active');
-        });
-    </script>
-
-    <!-- Jquery Table -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'excel', 'pdf', 'print'
-                ]
-            });
         });
     </script>
 

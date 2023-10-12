@@ -15,10 +15,6 @@
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
-
-    <!-- TABLE -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 </head>
 
 <body>
@@ -37,27 +33,33 @@
             </div>
             <ul class="list-unstyled px-2">
                 <li class="active">
-                    <a href="../Dashboard/dashboard_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="dashboardsiswa.html" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-house-door-fill"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="">
-                    <a href="../DataPendaftar/datapendaftar.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/biodata.html" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
-                        Data Pendaftar
+                        Data Diri
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/administrasi_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/orangtua.html" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-calculator"></i>
-                        Pembayaran
+                        Data Orang Tua
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/datapembayaran.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/sekolah.html" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
-                        Data Pembayaran
+                        Data Asal Sekolah
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../Formulir/datacalonsiswa.html" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-clipboard-data"></i>
+                        Berkas
                     </a>
                 </li>
             </ul>
@@ -106,7 +108,7 @@
             <!-- TABLE -->
             <div class="container">
                 <div class="row">
-                    <h1 class="display-4 pb-3"><b>Dashboard</b></h1>
+                    <h1 class="display-4 pb-3]"><b>Dashboard</b></h1>
 
                     <div class="col-sm-3">
                         <div class="card mb-3 border-primary">
@@ -269,26 +271,6 @@
             });
         </script>
 
-        <!-- Jquery Table -->
-        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-
-        <script>
-            $(document).ready(function () {
-                $('#example').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'excel', 'pdf', 'print'
-                    ]
-                });
-            });
-        </script>
 </body>
 
 </html>
