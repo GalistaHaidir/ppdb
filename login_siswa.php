@@ -8,27 +8,27 @@ $nama_db = "ppdb";
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 //atur variabel
 $err = "";
-$username = "";
+$email = "";
 
 //error_reporting(0);//
 if (isset($_POST['login'])) {
-    $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
-    if ($username == '' or $password == '') {
+    if ($email == '' or $password == '') {
     } else {
-        $sql1 = "select * from petugas where username = '$username'";
+        $sql1 = "select * from akun_siswa where email = '$email'";
         $q1 = mysqli_query($koneksi, $sql1);
         $r1 = mysqli_fetch_array($q1);
 
-        if ($r1['username'] == '') {
-            $err .= "<li>Username <b>$username</b> tidak tersedia</li>";
+        if ($r1['email'] == '') {
+            $err .= "<li>email <b>$email</b> tidak tersedia</li>";
         } elseif ($r1['password'] != md5($password)) {
             $err .= "<li>Password yang dimasukkan tidak sesuai</li>";
         }
         if (empty($err)) {
-            $_SESSION['session_username'] = $username;
+            $_SESSION['session_email'] = $email;
             $_SESSION['session_password'] = md5($password);
-            header("location:admin/Dashboard/dashboard_admin.php");
+            header("location:siswa/Dashboard/dashboardsiswa.php");
         }
     }
 }
@@ -105,7 +105,7 @@ if (isset($_POST['login'])) {
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-1">
-                        <h2>Hello</h2>
+                        <h2>LOGIN</h2>
                         <p>We are happy to have you back.</p>
                     </div>
                     <?php if ($err) { ?>
@@ -117,7 +117,7 @@ if (isset($_POST['login'])) {
                     <?php } ?>
                     <form method="POST">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" name="username"
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" name="email"
                             placeholder="Email">
                     </div>
                     <div class="input-group mb-4">
@@ -128,7 +128,7 @@ if (isset($_POST['login'])) {
                         <input type="submit" name="login" class="btn btn-lg btn-primary w-100 fs-6" value="Login">
                     </div>
                     <div class="row">
-                        <small>Don't have account? <a href="admin/Dashboard/dashboard_admin.php">Sign Up</a></small>
+                        <small>Belum punya akun? <a href="registersiswa.php">Registrasi</a></small>
                     </div>
                     </form>
                 </div>

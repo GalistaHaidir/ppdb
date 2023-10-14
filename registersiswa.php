@@ -7,31 +7,38 @@ $pass_db = "";
 $nama_db = "ppdb";
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 //atur variabel
+$email = "";
 $err = "";
-$username = "";
+$succ = "";
 
 //error_reporting(0);//
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if ($username == '' or $password == '') {
-    } else {
-        $sql1 = "select * from petugas where username = '$username'";
-        $q1 = mysqli_query($koneksi, $sql1);
-        $r1 = mysqli_fetch_array($q1);
+if (isset($_POST['register'])) {
+    $email = $_POST['email'];
+    $pass = $_POST['password'];
+    $password = md5($pass);
 
-        if ($r1['username'] == '') {
-            $err .= "<li>Username <b>$username</b> tidak tersedia</li>";
-        } elseif ($r1['password'] != md5($password)) {
-            $err .= "<li>Password yang dimasukkan tidak sesuai</li>";
-        }
-        if (empty($err)) {
-            $_SESSION['session_username'] = $username;
-            $_SESSION['session_password'] = md5($password);
-            header("location:admin/Dashboard/dashboard_admin.php");
+    // 1. Periksa apakah email sudah ada dalam database
+    $checkEmailQuery = "SELECT * FROM akun_siswa WHERE email = '$email'";
+    $checkEmailResult = mysqli_query($koneksi, $checkEmailQuery);
+
+    if (mysqli_num_rows($checkEmailResult) > 0) {
+        // 2. Tampilkan pesan kesalahan jika email sudah ada
+        $err .= "<li>email <b>$email</b> has already been used. Please choose a different email.</li>";
+    } else {
+        // 3. Jika email belum ada dalam database, tambahkan data
+        $query = "INSERT INTO akun_siswa (email, password) VALUES ('$email', '$password')";
+        $result = mysqli_query($koneksi, $query);
+
+        if ($result) {
+            $succ .= "<li>Registration Successful!.</li>";
+            header("location:login_siswa.php");
+        } else {
+            $err .= "<li>Unable to Register. Please try again.</li>";
         }
     }
 }
+
+
 ?>
 
 <!--HTML-->
@@ -103,9 +110,10 @@ if (isset($_POST['login'])) {
 
             <!-- Right Box -->
             <div class="col-md-6 right-box">
+                <!-- ... (kode HTML sebelumnya) ... -->
                 <div class="row align-items-center">
                     <div class="header-text mb-1">
-                        <h2>Hello</h2>
+                        <h2>Register</h2>
                         <p>We are happy to have you back.</p>
                     </div>
                     <?php if ($err) { ?>
@@ -115,23 +123,31 @@ if (isset($_POST['login'])) {
                             </ul>
                         </div>
                     <?php } ?>
+                    <?php if ($succ) { ?>
+                        <div id="success-alert" class="alert alert-success col-sm-12">
+                            <?php echo $succ; ?>
+                        </div>
+                    <?php } ?>
                     <form method="POST">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" name="username"
-                            placeholder="Email">
-                    </div>
-                    <div class="input-group mb-4">
-                        <input type="password" class="form-control form-control-lg bg-light fs-6" name="password"
-                            placeholder="Password">
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="submit" name="login" class="btn btn-lg btn-primary w-100 fs-6" value="Login">
-                    </div>
-                    <div class="row">
-                        <small>Don't have account? <a href="admin/Dashboard/dashboard_admin.php">Sign Up</a></small>
-                    </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control form-control-lg bg-light fs-6" name="email"
+                                placeholder="Email">
+                        </div>
+                        <div class="input-group mb-4">
+                            <input type="password" class="form-control form-control-lg bg-light fs-6" name="password"
+                                placeholder="Password">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="submit" name="register" class="btn btn-lg btn-primary w-100 fs-6"
+                                value="Register">
+                        </div>
+                        <div class="row">
+                            <small>Sudah Punya Akun? <a href="login_siswa.php">Masuk</a></small>
+                        </div>
                     </form>
                 </div>
+                <!-- ... (kode HTML setelahnya) ... -->
+
             </div>
         </div>
     </div>

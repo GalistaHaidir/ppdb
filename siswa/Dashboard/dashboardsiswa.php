@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 
@@ -25,7 +28,7 @@
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4">
                     <span class="bg-white text-dark rounded shadow px-2 me-2">PPDB</span>
-                    <span class="text-white">Admin</span>
+                    <span class="text-white">Siswa</span>
                 </h1>
                 <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
                     <i class="bi bi-list-nested"></i>
@@ -40,25 +43,25 @@
                 </li>
                 <li class="">
                     <a href="../Formulir/biodata.html" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-pencil-square"></i>
+                        <i class="bi bi-person-badge"></i>
                         Data Diri
                     </a>
                 </li>
                 <li class="">
                     <a href="../Formulir/orangtua.html" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-calculator"></i>
+                        <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
                 </li>
                 <li class="">
                     <a href="../Formulir/sekolah.html" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-clipboard-data"></i>
+                        <i class="bi bi-building"></i>
                         Data Asal Sekolah
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/datacalonsiswa.html" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-clipboard-data"></i>
+                    <a href="../Formulir/berkas.html" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-filetype-pdf"></i>
                         Berkas
                     </a>
                 </li>
@@ -68,7 +71,7 @@
 
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
+                    <a href="../../logout_siswa.php" class="text-decoration-none px-3 py-2 d-block">
                         <i class="bi bi-door-closed"></i>
                         Logout
                     </a>
