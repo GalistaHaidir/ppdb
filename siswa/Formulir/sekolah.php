@@ -33,31 +33,31 @@
             </div>
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../Dashboard/dashboardsiswa.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Dashboard/dashboardsiswa.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-house-door-fill"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/biodata.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/biodata.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-person-badge"></i>
                         Data Diri
                     </a>
                 </li>
-                <li class="active">
-                    <a href="../Formulir/orangtua.html" class="text-decoration-none px-3 py-3 d-block">
+                <li class="">
+                    <a href="../Formulir/orangtua.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
                 </li>
-                <li class="">
-                    <a href="../Formulir/sekolah.html" class="text-decoration-none px-3 py-3 d-block">
+                <li class="active">
+                    <a href="../Formulir/sekolah.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-building"></i>
                         Data Asal Sekolah
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/berkas.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-filetype-pdf"></i>
                         Berkas
                     </a>
@@ -68,7 +68,7 @@
 
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
+                    <a href="../../logout_siswa.php" class="text-decoration-none px-3 py-2 d-block">
                         <i class="bi bi-door-closed"></i>
                         Logout
                     </a>
@@ -108,7 +108,7 @@
             <!-- TABLE -->
             <div class="container">
                 <div class="col-md my-4 mx-2">
-                    <h3 class="fw-bold text-uppercase"><i class="bi bi-people-fill"></i>&nbsp;Data Orang Tua
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-building"></i>&nbsp;Data Asal Sekolah
                     </h3>
                 </div>
                 <hr>
@@ -116,53 +116,25 @@
                 <div class="col-md my-2 mx-2">
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="no_kk" class="form-label">Nomor Kartu Keluarga</label>
-                            <input type="number" class="form-control w-50" id="no_kk" placeholder="Masukkan Nomor KK"
-                                name="no_kk" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nama_ayah" class="form-label">Nama Lengkap Ayah</label>
-                            <input type="text" class="form-control form-control-md w-50" id="nama_ayah"
-                                placeholder="Masukkan Nama Lengkap Ayah" name="nama_ayah" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pendidikan_ayah" class="form-label">Pendidikan Terakhir Ayah</label>
-                            <input type="text" class="form-control form-control-md w-50" id="pendidikan_ayah"
-                                placeholder="Masukkan Pendidikan Terakhir Ayah" name="pendidikan_ayah"
-                                autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="penghasilan_ayah" class="form-label">Penghasilan Perbulan Ayah</label>
-                            <input type="text" class="form-control form-control-md w-50" id="penghasilan_ayah"
-                                placeholder="Masukkan Penghasilan Perbulan Ayah" name="penghasilan_ayah"
-                                autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nama_ibu" class="form-label">Nama Lengkap Ibu</label>
-                            <input type="text" class="form-control form-control-md w-50" id="nama_ibu"
-                                placeholder="Masukkan Nama Lengkap Ibu" name="nama_ibu" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="pendidikan_ibu" class="form-label">Pendidikan Terakhir Ibu</label>
-                            <input type="text" class="form-control form-control-md w-50" id="pendidikan_ibu"
-                                placeholder="Masukkan Pendidikan Terakhir Ibu" name="pendidikan_ibu" autocomplete="off"
+                            <label for="npsn" class="form-label">NPSN Asal Sekolah</label>
+                            <input type="number" class="form-control w-50" id="npsn" placeholder="Masukkan NPSN" name="npsn"
                                 required>
                         </div>
                         <div class="mb-3">
-                            <label for="penghasilan_ibu" class="form-label">Penghasiilan Perbulan Ibu</label>
-                            <input type="text" class="form-control form-control-md w-50" id="penghasilan_ibu"
-                                placeholder="Masukkan Penghasiilan Perbulan Ibu" name="penghasilan_ibu"
+                            <label for="nama_sekolah" class="form-label">Nama Asal Sekolah</label>
+                            <input type="text" class="form-control form-control-md w-50" id="nama_sekolah"
+                                placeholder="Masukkan Nama Asal Sekolah" name="nama_sekolah" autocomplete="off" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="alamat_asalsekolah" class="form-label">Alamat Asal Sekolah</label>
+                            <textarea class="form-control w-50" id="alamat_asalsekolah" rows="5" name="alamat_asalsekolah"
+                                placeholder="Masukkan Alamat Asal Sekolah" autocomplete="off" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telepon_asalsekolah" class="form-label">Telepon Asal Sekolah</label>
+                            <input type="text" class="form-control form-control-md w-50" id="telepon_asalsekolah"
+                                placeholder="Masukkan No. Telepon Asal Sekolah" name="no_telepon_asalsekolahhp"
                                 autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="no_hportu" class="form-label">No. HP Orang tua</label>
-                            <input type="text" class="form-control form-control-md w-50" id="no_hportu"
-                                placeholder="Masukkan No. HP Orang tua" name="no_hportu" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="alamat_ortu" class="form-label">Alamat</label>
-                            <textarea class="form-control w-50" id="alamat_ortu" rows="5" name="alamat_ortu"
-                                placeholder="Masukkan Alamat Orang tua" autocomplete="off" required></textarea>
                         </div>
                         <hr>
                         <a href="dataguru.php" class="btn btn-secondary">Kembali</a>

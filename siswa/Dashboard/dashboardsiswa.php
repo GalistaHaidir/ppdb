@@ -36,31 +36,31 @@ session_start();
             </div>
             <ul class="list-unstyled px-2">
                 <li class="active">
-                    <a href="dashboardsiswa.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="dashboardsiswa.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-house-door-fill"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/biodata.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/biodata.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-person-badge"></i>
                         Data Diri
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/orangtua.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/orangtua.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/sekolah.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/sekolah.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-building"></i>
                         Data Asal Sekolah
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/berkas.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-filetype-pdf"></i>
                         Berkas
                     </a>
@@ -196,7 +196,7 @@ session_start();
                                         <h5 class="card-title text-light">55</h5>
                                         <p class="card-text text-light">Total Pendaftar</p>
                                         <hr style="border: 1px solid white">
-                                        <a href="../DataPendaftar/datapendaftar.html">
+                                        <a href="../DataPendaftar/datapendaftar.php">
                                             <button type="button" class="btn text-light">Info Lengkap
                                                 <i class="bi bi-arrow-right-circle-fill"></i></button>
                                         </a>
@@ -217,7 +217,7 @@ session_start();
                                         <h5 class="card-title text-light">90</h5>
                                         <p class="card-text text-light">Sudah Daftar Ulang</p>
                                         <hr style="border: 1px solid white">
-                                        <a href="../Administrasi/datapembayaran.html">
+                                        <a href="../Administrasi/datapembayaran.php">
                                             <button type="button" class="btn text-light">Info Lengkap
                                                 <i class="bi bi-arrow-right-circle-fill"></i></button>
                                         </a>
@@ -238,7 +238,7 @@ session_start();
                                         <h5 class="card-title text-light">80</h5>
                                         <p class="card-text text-light">Sudah diterima</p>
                                         <hr style="border: 1px solid white">
-                                        <a href="../DataPendaftar/datapendaftar.html">
+                                        <a href="../DataPendaftar/datapendaftar.php">
                                             <button type="button" class="btn text-light">Info Lengkap
                                                 <i class="bi bi-arrow-right-circle-fill"></i></button>
                                         </a>

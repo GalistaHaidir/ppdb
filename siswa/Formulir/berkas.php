@@ -33,31 +33,31 @@
             </div>
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../Dashboard/dashboardsiswa.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Dashboard/dashboardsiswa.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-house-door-fill"></i>
                         Dashboard
                     </a>
                 </li>
-                <li class="active">
-                    <a href="../Formulir/biodata.html" class="text-decoration-none px-3 py-3 d-block">
+                <li class="">
+                    <a href="../Formulir/biodata.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-person-badge"></i>
                         Data Diri
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/orangtua.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/orangtua.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Formulir/sekolah.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Formulir/sekolah.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-building"></i>
                         Data Asal Sekolah
                     </a>
                 </li>
-                <li class="">
-                    <a href="../Formulir/berkas.html" class="text-decoration-none px-3 py-3 d-block">
+                <li class="active">
+                    <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-filetype-pdf"></i>
                         Berkas
                     </a>
@@ -68,7 +68,7 @@
 
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
+                    <a href="../../logout_siswa.php" class="text-decoration-none px-3 py-2 d-block">
                         <i class="bi bi-door-closed"></i>
                         Logout
                     </a>
@@ -108,7 +108,7 @@
             <!-- TABLE -->
             <div class="container">
                 <div class="col-md my-4 mx-2">
-                    <h3 class="fw-bold text-uppercase"><i class="bi bi-person-badge"></i>&nbsp;Data Diri Siswa
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-filetype-pdf"></i>&nbsp;Berkas Persyaratan
                     </h3>
                 </div>
                 <hr>
@@ -116,74 +116,48 @@
                 <div class="col-md my-2 mx-2">
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="nama_siswa" class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control form-control-md w-50" id="nama_siswa"
-                                placeholder="Masukkan Nama Lengkap" name="nama_siswa" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email_siswa" class="form-label">Email</label>
-                            <input type="text" class="form-control form-control-md w-50" id="email_siswa"
-                                placeholder="Masukkan Email" name="email_siswa" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nisn" class="form-label">NISN</label>
-                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN" min="1"
-                                name="nisn" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="no_kk" class="form-label">Nomor Kartu Keluarga</label>
+                            <label for="no_kk" class="form-label">Nomor SKL</label>
                             <input type="number" class="form-control w-50" id="no_kk" placeholder="Masukkan Nomor KK"
                                 name="no_kk" autocomplete="off" required>
                         </div>
                         <div class="mb-3">
-                            <label for="npsn" class="form-label">NPSN Asal Sekolah</label>
-                            <input type="number" class="form-control w-50" id="npsn" placeholder="Masukkan NPSN"
-                                name="npsn" required>
-                        </div>
-                        <div class="mb-3">
-                            <label>Jenis Kelamin</label>
+                            <label>Jalur</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="jenis_kelamin" id="Laki - Laki"
                                     value="Laki - Laki">
-                                <label class="form-check-label" for="Laki - Laki">Laki - Laki</label>
+                                <label class="form-check-label" for="Laki - Laki">Afirmasi</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="jenis_kelamin" id="Perempuan"
                                     value="Perempuan">
-                                <label class="form-check-label" for="Perempuan">Perempuan</label>
+                                <label class="form-check-label" for="Perempuan">Zonasi</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="Perempuan"
+                                    value="Perempuan">
+                                <label class="form-check-label" for="Perempuan">Perpindahan Tugas Ortu/Wali</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="Perempuan"
+                                    value="Perempuan">
+                                <label class="form-check-label" for="Perempuan">Prestasi</label>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-                            <input type="text" class="form-control form-control-md w-50" id="tempat_lahir"
-                                placeholder="Masukkan Tempat Lahir" name="tempat_lahir" autocomplete="on" required>
+                            <label for="gambar" class="form-label">SKL</label>
+                            <input class="form-control form-control-sm w-50" id="gambar" name="gambar" type="file">
                         </div>
                         <div class="mb-3">
-                            <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
-                            <input type="date" class="form-control w-50" id="tanggal_lahir" name="tanggal_lahir"
-                                required>
+                            <label for="gambar" class="form-label">KK</label>
+                            <input class="form-control form-control-sm w-50" id="gambar" name="gambar" type="file">
                         </div>
                         <div class="mb-3">
-                            <label for="no_hp" class="form-label">No. HP</label>
-                            <input type="text" class="form-control form-control-md w-50" id="no_hp"
-                                placeholder="Masukkan Nomor HP" name="no_hp" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="jumlah_saudara" class="form-label">Jumlah Saudara</label>
-                            <input type="number" class="form-control form-control-md w-50" id="jumlah_saudara"
-                                placeholder="Jumlah Saudara" name="jumlah_saudara" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="anak_ke" class="form-label">Anak Ke</label>
-                            <input type="number" class="form-control form-control-md w-50" id="anak_ke"
-                                placeholder="Anak Ke" name="anak_ke" autocomplete="off" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="alamat" class="form-label">Alamat</label>
-                            <textarea class="form-control w-50" id="alamat" rows="5" name="alamat"
-                                placeholder="Masukkan Alamat" autocomplete="off" required></textarea>
+                            <label for="gambar" class="form-label">Berkas Yang Berkaitan dengan Jalur Pendaftaran</label>
+                            <input class="form-control form-control-sm w-50" id="gambar" name="gambar" type="file"
+                                multiple>
                         </div>
                         <hr>
+                        <a href="dataguru.php" class="btn btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                     </form>
                 </div>
