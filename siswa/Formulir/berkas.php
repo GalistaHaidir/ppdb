@@ -1,3 +1,53 @@
+<?php
+session_start();
+//atur koneksi ke database
+$host_db = "localhost";
+$user_db = "root";
+$pass_db = "";
+$nama_db = "ppdb";
+
+$koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
+if (!$koneksi) {
+    die("TIdak bisa terkoneksi ke database");
+}
+
+$no_skl = "";
+$jalur = "";
+$skl = "";
+$kk = "";
+$berkas = "";
+
+$error = "";
+$sukses = "";
+
+if (isset($_POST['simpan'])) {
+    $no_skl = $_POST['no_skl'];
+    $jalur = $_POST['jalur'];
+    $skl = $_FILES['skl']['name'];
+    $kk = $_FILES['kk']['name'];
+    $berkas = $_FILES['berkas']['name'];
+
+    // Pindahkan file-file yang diunggah ke direktori yang sesuai
+    $upload_directory = '../../file/';
+    move_uploaded_file($_FILES['skl']['tmp_name'], $upload_directory . $skl);
+    move_uploaded_file($_FILES['kk']['tmp_name'], $upload_directory . $kk);
+    move_uploaded_file($_FILES['berkas']['tmp_name'], $upload_directory . $berkas);
+
+    if ($no_skl && $jalur && $skl && $kk && $berkas) {
+        $sql1 = "INSERT INTO berkas (no_skl, jalur, skl, kk, berkas) 
+        VALUES ('$no_skl','$jalur', '$skl', '$kk', '$berkas')";
+
+        $q1 = mysqli_query($koneksi, $sql1);
+        if ($q1) {
+            $sukses = "Berhasil memasukkan data baru";
+        } else {
+            $error = "Gagal memasukkan data";
+        }
+    } else {
+        $error = "Silahkan masukkan semua data";
+    }
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -58,8 +108,20 @@
                 </li>
                 <li class="active">
                     <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-filetype-pdf"></i>
+                    <i class="bi bi-filetype-pdf"></i>
                         Berkas
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../Formulir/preview.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-file-earmark-check"></i>
+                    Preview
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../Formulir/pendaftaran.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-pencil-square"></i>
+                    Pendaftaran
                     </a>
                 </li>
             </ul>
@@ -112,84 +174,99 @@
                     </h3>
                 </div>
                 <hr>
-
                 <div class="col-md my-2 mx-2">
+                    <?php
+                    if ($error) {
+                        ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $error ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <?php
+                    if ($sukses) {
+                        ?>
+                        <div class="alert alert-success" role="alert">
+                            <?php echo $sukses ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="no_kk" class="form-label">Nomor SKL</label>
-                            <input type="number" class="form-control w-50" id="no_kk" placeholder="Masukkan Nomor KK"
-                                name="no_kk" autocomplete="off" required>
+                            <label for="no_skl" class="form-label">Nomor SKL</label>
+                            <input type="number" class="form-control w-50" id="no_skl" placeholder="Masukkan Nomor KK"
+                                name="no_skl" value="<?php echo $no_skl ?>">
                         </div>
                         <div class="mb-3">
-                            <label>Jalur</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="Laki - Laki"
-                                    value="Laki - Laki">
-                                <label class="form-check-label" for="Laki - Laki">Afirmasi</label>
+                            <label for="jalur">Jalur</label>
+                            <div class="col-sm-6 mt-1">
+                                <select class="form-select" name="jalur" aria-label="Default select example">
+                                    <option selected>- Pilih Jenis Jalur -</option>
+                                    <option value="afirmasi" <?php if ($jalur == "afirmasi")
+                                        echo "selected" ?>>
+                                            Afirmasi</option>
+                                        <option value="zonasi" <?php if ($jalur == "zonasi")
+                                        echo "selected" ?>>Zonasi
+                                        </option>
+                                        <option value="perpindahan" <?php if ($jalur == "perpindahan")
+                                        echo "selected" ?>>Perpindahan
+                                        </option>
+                                        <option value="prestasi" <?php if ($jalur == "prestasi")
+                                        echo "selected" ?>>Prestasi
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="Perempuan"
-                                    value="Perempuan">
-                                <label class="form-check-label" for="Perempuan">Zonasi</label>
+                            <div class="mb-3">
+                                <label for="skl" class="form-label">SKL</label>
+                                <input class="form-control form-control-sm w-50" id="skl" name="skl" type="file">
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="Perempuan"
-                                    value="Perempuan">
-                                <label class="form-check-label" for="Perempuan">Perpindahan Tugas Ortu/Wali</label>
+                            <div class="mb-3">
+                                <label for="kk" class="form-label">KK</label>
+                                <input class="form-control form-control-sm w-50" id="kk" name="kk" type="file">
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="jenis_kelamin" id="Perempuan"
-                                    value="Perempuan">
-                                <label class="form-check-label" for="Perempuan">Prestasi</label>
+                            <div class="mb-3">
+                                <label for="berkas" class="form-label">Berkas Yang Berkaitan dengan Jalur
+                                    Pendaftaran</label>
+                                <input class="form-control form-control-sm w-50" id="berkas" name="berkas" type="file"
+                                    multiple>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="gambar" class="form-label">SKL</label>
-                            <input class="form-control form-control-sm w-50" id="gambar" name="gambar" type="file">
-                        </div>
-                        <div class="mb-3">
-                            <label for="gambar" class="form-label">KK</label>
-                            <input class="form-control form-control-sm w-50" id="gambar" name="gambar" type="file">
-                        </div>
-                        <div class="mb-3">
-                            <label for="gambar" class="form-label">Berkas Yang Berkaitan dengan Jalur Pendaftaran</label>
-                            <input class="form-control form-control-sm w-50" id="gambar" name="gambar" type="file"
-                                multiple>
-                        </div>
-                        <hr>
-                        <a href="dataguru.php" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
-                    </form>
+                            <hr>
+                            <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                            <button type="submit" class="btn btn-primary" name="simpan">Download Formulir yang Telah Diisi</button>
+                        </form>
+                    </div>
                 </div>
+
+
             </div>
-
-
         </div>
-    </div>
-    </div>
+        </div>
 
-    <!-- BOOTSTRAP JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+        <!-- BOOTSTRAP JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+            </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- INTERNAL JS -->
+        <script>
+            $(".sidebar ul li").on('click', function () {
+                $(".sidebar ul li.active").removeClass('active');
+                $(this).addClass('active');
+            });
+
+            $('.open-btn').on('click', function () {
+                $('.sidebar').addClass('active');
+            });
+
+            $('.close-btn').on('click', function () {
+                $('.sidebar').removeClass('active');
+            });
         </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- INTERNAL JS -->
-    <script>
-        $(".sidebar ul li").on('click', function () {
-            $(".sidebar ul li.active").removeClass('active');
-            $(this).addClass('active');
-        });
+    </body>
 
-        $('.open-btn').on('click', function () {
-            $('.sidebar').addClass('active');
-        });
-
-        $('.close-btn').on('click', function () {
-            $('.sidebar').removeClass('active');
-        });
-    </script>
-
-</body>
-
-</html>
+    </html>

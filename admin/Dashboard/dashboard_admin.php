@@ -37,25 +37,25 @@ session_start();
             </div>
             <ul class="list-unstyled px-2">
                 <li class="active">
-                    <a href="../Dashboard/dashboard_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Dashboard/dashboard_admin.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-house-door-fill"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="">
-                    <a href="../DataPendaftar/datapendaftar.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../DataPendaftar/datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
                         Data Pendaftar
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/administrasi_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Administrasi/administrasi_admin.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-calculator"></i>
                         Pembayaran
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/datapembayaran.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Administrasi/datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
                         Data Pembayaran
                     </a>

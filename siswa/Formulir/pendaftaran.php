@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 //atur koneksi ke database
 $host_db = "localhost";
 $user_db = "root";
@@ -11,33 +12,28 @@ if (!$koneksi) {
     die("TIdak bisa terkoneksi ke database");
 }
 
-$no_kk = "";
-$nama_ayah = "";
-$pendidikan_ayah = "";
-$penghasilan_ayah = "";
-$nama_ibu = "";
-$pendidikan_ibu = "";
-$penghasilan_ibu = "";
-$no_hportu = "";
-$alamat_ortu = "";
+$nisn = "";
+$tanggal_pendaftaran = "";
+$username_petugas = "";
+$formulir = "";
 
 $error = "";
 $sukses = "";
 
 if (isset($_POST['simpan'])) {
-    $no_kk = $_POST['no_kk'];
-    $nama_ayah = $_POST['nama_ayah'];
-    $pendidikan_ayah = $_POST['pendidikan_ayah'];
-    $penghasilan_ayah = $_POST['penghasilan_ayah'];
-    $nama_ibu = $_POST['nama_ibu'];
-    $pendidikan_ibu = $_POST['pendidikan_ibu'];
-    $penghasilan_ibu = $_POST['penghasilan_ibu'];
-    $no_hportu = $_POST['no_hportu'];
-    $alamat_ortu = $_POST['alamat_ortu'];
+    $nisn = $_POST['nisn'];
+    $tanggal_pendaftaran = $_POST['tanggal_pendaftaran'];
+    $username_petugas = $_POST['username_petugas'];
+    $formulir = $_FILES['formulir']['name'];
 
-    if ($no_kk && $nama_ayah && $pendidikan_ayah && $penghasilan_ayah && $nama_ibu && $pendidikan_ibu && $penghasilan_ibu && $no_hportu && $alamat_ortu) {
-        $sql1 = "INSERT INTO orang_tua (no_kk, nama_ayah, pendidikan_ayah, penghasilan_ayah, nama_ibu, pendidikan_ibu, penghasilan_ibu, no_hportu, alamat_ortu)
-        VALUES ('$no_kk', '$nama_ayah', '$pendidikan_ayah', '$penghasilan_ayah', '$nama_ibu', '$pendidikan_ibu', '$penghasilan_ibu', '$no_hportu', '$alamat_ortu')";
+
+    // Pindahkan file-file yang diunggah ke direktori yang sesuai
+    $upload_directory = '../../file/';
+    move_uploaded_file($_FILES['formulir']['tmp_name'], $upload_directory . $formulir);
+
+    if ($nisn && $tanggal_pendaftaran && $username_petugas && $formulir) {
+        $sql1 = "INSERT INTO pendaftaran (nisn, tanggal_pendaftaran ,username_petugas ,formulir) 
+        VALUES ('$nisn','$tanggal_pendaftaran', '$username_petugas', '$formulir')";
 
         $q1 = mysqli_query($koneksi, $sql1);
         if ($q1) {
@@ -96,7 +92,7 @@ if (isset($_POST['simpan'])) {
                         Data Diri
                     </a>
                 </li>
-                <li class="active">
+                <li class="">
                     <a href="../Formulir/orangtua.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-people-fill"></i>
                         Data Orang Tua
@@ -110,20 +106,20 @@ if (isset($_POST['simpan'])) {
                 </li>
                 <li class="">
                     <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-filetype-pdf"></i>
+                        <i class="bi bi-filetype-pdf"></i>
                         Berkas
                     </a>
                 </li>
                 <li class="">
                     <a href="../Formulir/preview.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-file-earmark-check"></i>
-                    Preview
+                        <i class="bi bi-file-earmark-check"></i>
+                        Preview
                     </a>
                 </li>
-                <li class="">
+                <li class="active">
                     <a href="../Formulir/pendaftaran.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-pencil-square"></i>
-                    Pendaftaran
+                        <i class="bi bi-pencil-square"></i>
+                        Pendaftaran
                     </a>
                 </li>
             </ul>
@@ -172,12 +168,13 @@ if (isset($_POST['simpan'])) {
             <!-- TABLE -->
             <div class="container">
                 <div class="col-md my-4 mx-2">
-                    <h3 class="fw-bold text-uppercase"><i class="bi bi-people-fill"></i>&nbsp;Data Orang Tua
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-pencil-square"></i>&nbsp;Formulir
+                        Pendaftaran
                     </h3>
                 </div>
                 <hr>
                 <div class="col-md my-2 mx-2">
-                <?php
+                    <?php
                     if ($error) {
                         ?>
                         <div class="alert alert-danger" role="alert">
@@ -197,50 +194,23 @@ if (isset($_POST['simpan'])) {
                     ?>
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
-                            <label for="no_kk" class="form-label">Nomor Kartu Keluarga</label>
-                            <input type="number" class="form-control w-50" id="no_kk" placeholder="Masukkan Nomor KK"
-                                name="no_kk" value="<?php echo $no_kk?>">
+                            <label for="nisn" class="form-label">NISN</label>
+                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN"
+                                name="nisn" value="<?php echo $nisn ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="nama_ayah" class="form-label">Nama Lengkap Ayah</label>
-                            <input type="text" class="form-control form-control-md w-50" id="nama_ayah"
-                                placeholder="Masukkan Nama Lengkap Ayah" name="nama_ayah" value="<?php echo $nama_ayah?>">
+                            <label for="tanggal_pendaftaran" class="form-label">Tanggal Pendaftaran</label>
+                            <input type="text" class="form-control form-control-md w-50" id="tanggal_pendaftaran"
+                                name="tanggal_pendaftaran" value="<?php echo date('Y-m-d'); ?>" readonly>
                         </div>
                         <div class="mb-3">
-                            <label for="pendidikan_ayah" class="form-label">Pendidikan Terakhir Ayah</label>
-                            <input type="text" class="form-control form-control-md w-50" id="pendidikan_ayah"
-                                placeholder="Masukkan Pendidikan Terakhir Ayah" name="pendidikan_ayah" value="<?php echo $pendidikan_ayah?>"
-                            >
+                            <label for="username_petugas" class="form-label">Petugas</label>
+                            <input type="text" class="form-control form-control-md w-50" id="username_petugas"
+                            name="username_petugas" value="admin" readonly>
                         </div>
-                        <div class="mb-3">
-                            <label for="penghasilan_ayah" class="form-label">Penghasilan Perbulan Ayah</label>
-                            <input type="text" class="form-control form-control-md w-50" id="penghasilan_ayah"
-                                placeholder="Masukkan Penghasilan Perbulan Ayah" name="penghasilan_ayah" value="<?php echo $penghasilan_ayah?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="nama_ibu" class="form-label">Nama Lengkap Ibu</label>
-                            <input type="text" class="form-control form-control-md w-50" id="nama_ibu"
-                                placeholder="Masukkan Nama Lengkap Ibu" name="nama_ibu" value="<?php echo $nama_ibu?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="pendidikan_ibu" class="form-label">Pendidikan Terakhir Ibu</label>
-                            <input type="text" class="form-control form-control-md w-50" id="pendidikan_ibu"
-                                placeholder="Masukkan Pendidikan Terakhir Ibu" name="pendidikan_ibu" value="<?php echo $pendidikan_ibu?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="penghasilan_ibu" class="form-label">Penghasilan Perbulan Ibu</label>
-                            <input type="text" class="form-control form-control-md w-50" id="penghasilan_ibu"
-                                placeholder="Masukkan Penghasiilan Perbulan Ibu" name="penghasilan_ibu" value="<?php echo $penghasilan_ibu?>">
-                        </div>
-                        <div class="mb-3">
-                            <label for="no_hportu" class="form-label">No. HP Orang tua</label>
-                            <input type="text" class="form-control form-control-md w-50" id="no_hportu"
-                                placeholder="Masukkan No. HP Orang tua" name="no_hportu" value="<?php echo $no_hportu?>"> 
-                        </div>
-                        <div class="mb-3">
-                            <label for="alamat_ortu" class="form-label">Alamat</label>
-                            <textarea class="form-control w-50" id="alamat_ortu" rows="5" name="alamat_ortu"
-                                placeholder="Masukkan Alamat Orang tua"><?php echo $alamat_ortu?></textarea>
+                        <div class="mb-3 mt-3">
+                            <label for="formulir" class="form-label">Formulir</label>
+                            <input class="form-control form-control-sm w-50" id="formulir" name="formulir" type="file">
                         </div>
                         <hr>
                         <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>

@@ -19,7 +19,6 @@
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
-
 </head>
 
 <body>
@@ -38,25 +37,25 @@
             </div>
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../Dashboard/dashboard_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Dashboard/dashboard_admin.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-house-door-fill"></i>
                         Dashboard
                     </a>
                 </li>
-                <li class="">
-                    <a href="../DataPendaftar/datapendaftar.html" class="text-decoration-none px-3 py-3 d-block">
+                <li class="active">
+                    <a href="../DataPendaftar/datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
                         Data Pendaftar
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/administrasi_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Administrasi/administrasi_admin.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-calculator"></i>
                         Pembayaran
                     </a>
                 </li>
-                <li class="active">
-                    <a href="../Administrasi/datapembayaran.html" class="text-decoration-none px-3 py-3 d-block">
+                <li class="">
+                    <a href="../Administrasi/datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
                         Data Pembayaran
                     </a>
@@ -105,11 +104,10 @@
             </nav>
 
             <!-- TABLE -->
-            <!-- TABLE -->
             <div class="container">
                 <div class="card mt-3">
                     <div class="card-body">
-                        <h1 class="display-4"><b>Data Pembayaran</b></h1>
+                        <h1 class="display-4"><b>Data Pendaftar</b></h1>
                         <table id="example" class="display nowrap" style="max-width: 95%;">
                             <thead>
                                 <tr>
@@ -193,7 +191,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>

@@ -1,3 +1,50 @@
+<?php
+session_start();
+//atur koneksi ke database
+$host_db = "localhost";
+$user_db = "root";
+$pass_db = "";
+$nama_db = "ppdb";
+
+$koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
+if (!$koneksi) {
+    die("TIdak bisa terkoneksi ke database");
+}
+
+$tanggal_pembayaran = "";
+$jenis_pembayaran = "";
+$harga = "";
+$subtotal = "";
+$bayar = "";
+$kembali = "";
+
+$error = "";
+$sukses = "";
+
+if (isset($_POST['simpan'])) {
+    $tanggal_pembayaran = $_POST['tanggal_pembayaran'];
+    $jenis_pembayaran = $_POST['jenis_pembaya$jenis_pembayaran'];
+    $harga = $_POST['harga'];
+    $subtotal = $_POST['subtotal'];
+    $bayar = $_POST['bayar'];
+    $kembali = $_POST['kembali'];
+
+
+    if ($tanggal_pembayaran && $jenis_pembayaran && $harga && $subtotal && $bayar && $kembali) {
+        $sql1 = "INSERT INTO pembayaran (tanggal_pembayaran, jenis_pembayaran, harga, subtotal, bayar, kembali)
+        VALUES ('$tanggal_pembayaran', '$jenis_pembayaran', '$harga', '$subtotal', '$bayar', '$kembali')";
+
+        $q1 = mysqli_query($koneksi, $sql1);
+        if ($q1) {
+            $sukses = "Berhasil memasukkan data baru";
+        } else {
+            $error = "Gagal memasukkan data";
+        }
+    } else {
+        $error = "Silahkan masukkan semua data";
+    }
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -34,25 +81,25 @@
             </div>
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../Dashboard/dashboard_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Dashboard/dashboard_admin.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-house-door-fill"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="">
-                    <a href="../DataPendaftar/datapendaftar.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../DataPendaftar/datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
                         Data Pendaftar
                     </a>
                 </li>
                 <li class="active">
-                    <a href="../Administrasi/administrasi_admin.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Administrasi/administrasi_admin.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-calculator"></i>
                         Pembayaran
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/datapembayaran.html" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../Administrasi/datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
                         Data Pembayaran
                     </a>
@@ -64,7 +111,7 @@
             <ul class="list-unstyled px-2">
                 <li class="">
                     <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
-                        <i class="bi bi-clipboard-data"></i>
+                        <i class="bi bi-door-closed"></i>
                         Logout
                     </a>
                 </li>
@@ -113,7 +160,8 @@
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail3" readonly>
+                                        <input type="text" class="form-control" id="inputEmail3"
+                                            value="<?php echo date('d/m/Y'); ?>" readonly>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -121,16 +169,22 @@
                                     <div class="col-sm-10">
                                         <select class="form-select" aria-label="Default select example">
                                             <option selected>Pilih Jenis Bayar</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="1">Daftar Ulang</option>
+                                            <option value="2">Buku</option>
+                                            <option value="3">Seragam</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="inputPassword" class="col-sm-2 col-form-label">Harga</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputPassword" readonly>
+                                        <input type="text" class="form-control" id="inputPassword">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputPassword" class="col-sm-2 col-form-label">Subtotal</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputPassword">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -147,9 +201,9 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPassword" class="col-sm-2 col-form-label">Kembali</label>
+                                    <label for="" class="col-sm-2 col-form-label">Kembali</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputPassword" readonly>
+                                        <input type="text" class="form-control" id="inputPassword">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -170,7 +224,7 @@
                                     Timur 60231</div>
                                 <br>
                                 <div class="tlpn" style="float: left;">No Tlpn : +6231-99421835 </div>
-                                <div class="tgl" style="float: right;">TGL : 12 MEI 2023</div>
+                                <div class="tgl" style="float: right;">TGL : <?php echo date('d/m/Y'); ?></div>
                                 <br>
                                 <div class="kasir" style="float: left;">Kasir : Admin</div>
                                 <div class="jam" style="float: right;">Jam : 19:00</div>
@@ -181,12 +235,10 @@
                                         <tr>
                                             <th scope="col">Jenis Transaksi</th>
                                             <th scope="col">Harga</th>
-                                            <th scope="col">Subtotal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th scope="row">1</th>
                                             <td>Mark</td>
                                             <td>Otto</td>
                                         </tr>
@@ -234,15 +286,15 @@
         });
     </script>
 
-<script>
-    function printPageArea(areaID) {
-        var printContent = document.getElementById(areaID).innerHTML;
-        var originalContent = document.body.innerHTML;
-        document.body.innerHTML = printContent; // Perbaikan 1
-        window.print();
-        document.body.innerHTML = originalContent; // Perbaikan 2
-    }
-</script>
+    <script>
+        function printPageArea(areaID) {
+            var printContent = document.getElementById(areaID).innerHTML;
+            var originalContent = document.body.innerHTML;
+            document.body.innerHTML = printContent; // Perbaikan 1
+            window.print();
+            document.body.innerHTML = originalContent; // Perbaikan 2
+        }
+    </script>
 
 </body>
 

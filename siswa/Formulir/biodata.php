@@ -55,8 +55,6 @@ if (isset($_POST['simpan'])) {
         $error = "Silahkan masukkan semua data";
     }
 }
-
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -118,8 +116,20 @@ if (isset($_POST['simpan'])) {
                 </li>
                 <li class="">
                     <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-filetype-pdf"></i>
+                    <i class="bi bi-filetype-pdf"></i>
                         Berkas
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../Formulir/preview.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-file-earmark-check"></i>
+                    Preview
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../Formulir/pendaftaran.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-pencil-square"></i>
+                    Pendaftaran
                     </a>
                 </li>
             </ul>
@@ -172,7 +182,6 @@ if (isset($_POST['simpan'])) {
                     </h3>
                 </div>
                 <hr>
-
                 <div class="col-md my-2 mx-2">
                     <?php
                     if ($error) {

@@ -61,11 +61,22 @@ session_start();
                 </li>
                 <li class="">
                     <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-filetype-pdf"></i>
+                    <i class="bi bi-filetype-pdf"></i>
                         Berkas
                     </a>
                 </li>
-            </ul>
+                <li class="">
+                    <a href="../Formulir/preview.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-file-earmark-check"></i>
+                    Preview
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../Formulir/pendaftaran.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-pencil-square"></i>
+                    Pendaftaran
+                    </a>
+                </li>
 
             <hr class="h-color mx-2">
 

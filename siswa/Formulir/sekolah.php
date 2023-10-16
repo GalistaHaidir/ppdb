@@ -1,3 +1,45 @@
+<?php
+session_start();
+//atur koneksi ke database
+$host_db = "localhost";
+$user_db = "root";
+$pass_db = "";
+$nama_db = "ppdb";
+
+$koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
+if (!$koneksi) {
+    die("TIdak bisa terkoneksi ke database");
+}
+
+$npsn = "";
+$nama_sekolah = "";
+$alamat_sekolah = "";
+$telepon_sekolah = "";
+
+$error = "";
+$sukses = "";
+
+if (isset($_POST['simpan'])) {
+    $npsn = $_POST['npsn'];
+    $nama_sekolah = $_POST['nama_sekolah'];
+    $alamat_sekolah = $_POST['alamat_sekolah'];
+    $telepon_sekolah = $_POST['telepon_sekolah'];
+
+    if ($npsn && $nama_sekolah && $alamat_sekolah && $telepon_sekolah) {
+        $sql1 = "INSERT INTO asal_sekolah (npsn, nama_sekolah, alamat_sekolah, telepon_sekolah) 
+        VALUES ('$npsn','$nama_sekolah', '$alamat_sekolah', '$telepon_sekolah')";
+
+        $q1 = mysqli_query($koneksi, $sql1);
+        if ($q1) {
+            $sukses = "Berhasil memasukkan data baru";
+        } else {
+            $error = "Gagal memasukkan data";
+        }
+    } else {
+        $error = "Silahkan masukkan semua data";
+    }
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -58,8 +100,20 @@
                 </li>
                 <li class="">
                     <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-filetype-pdf"></i>
+                    <i class="bi bi-filetype-pdf"></i>
                         Berkas
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../Formulir/preview.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-file-earmark-check"></i>
+                    Preview
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../Formulir/pendaftaran.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-pencil-square"></i>
+                    Pendaftaran
                     </a>
                 </li>
             </ul>
@@ -112,32 +166,47 @@
                     </h3>
                 </div>
                 <hr>
-
                 <div class="col-md my-2 mx-2">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <?php
+                    if ($error) {
+                        ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $error ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <?php
+                    if ($sukses) {
+                        ?>
+                        <div class="alert alert-success" role="alert">
+                            <?php echo $sukses ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                <div class="col-md my-2 mx-2">
+                    <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="npsn" class="form-label">NPSN Asal Sekolah</label>
-                            <input type="number" class="form-control w-50" id="npsn" placeholder="Masukkan NPSN" name="npsn"
-                                required>
+                            <input type="number" class="form-control w-50" id="npsn" placeholder="Masukkan NPSN" name="npsn" value="<?php echo $npsn ?>">
                         </div>
                         <div class="mb-3">
                             <label for="nama_sekolah" class="form-label">Nama Asal Sekolah</label>
                             <input type="text" class="form-control form-control-md w-50" id="nama_sekolah"
-                                placeholder="Masukkan Nama Asal Sekolah" name="nama_sekolah" autocomplete="off" required>
+                                placeholder="Masukkan Nama Asal Sekolah" name="nama_sekolah" value="<?php echo $nama_sekolah?>">
                         </div>
                         <div class="mb-3">
                             <label for="alamat_asalsekolah" class="form-label">Alamat Asal Sekolah</label>
-                            <textarea class="form-control w-50" id="alamat_asalsekolah" rows="5" name="alamat_asalsekolah"
-                                placeholder="Masukkan Alamat Asal Sekolah" autocomplete="off" required></textarea>
+                            <textarea class="form-control w-50" id="alamat_asalsekolah" rows="5" name="alamat_sekolah"
+                                placeholder="Masukkan Alamat Asal Sekolah" ><?php echo $alamat_sekolah?></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="telepon_asalsekolah" class="form-label">Telepon Asal Sekolah</label>
-                            <input type="text" class="form-control form-control-md w-50" id="telepon_asalsekolah"
-                                placeholder="Masukkan No. Telepon Asal Sekolah" name="no_telepon_asalsekolahhp"
-                                autocomplete="off" required>
+                            <label for="telepon_sekolah" class="form-label">Telepon Asal Sekolah</label>
+                            <input type="text" class="form-control form-control-md w-50" id="telepon_sekolah"
+                                placeholder="Masukkan No. Telepon Asal Sekolah" name="telepon_sekolah" value="<?php echo $telepon_sekolah?>">
                         </div>
                         <hr>
-                        <a href="dataguru.php" class="btn btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                     </form>
                 </div>
