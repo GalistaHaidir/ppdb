@@ -4,7 +4,7 @@ session_start();
 $host_db = "localhost";
 $user_db = "root";
 $pass_db = "";
-$nama_db = "ppdb";
+$nama_db = "sekolah";
 
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 if (!$koneksi) {
@@ -198,7 +198,7 @@ if (isset($_POST['simpan'])) {
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="no_kk" class="form-label">Nomor Kartu Keluarga</label>
-                            <input type="number" class="form-control w-50" id="no_kk" placeholder="Masukkan Nomor KK"
+                            <input type="text" class="form-control w-50" id="no_kk" placeholder="Masukkan Nomor KK"
                                 name="no_kk" value="<?php echo $no_kk?>">
                         </div>
                         <div class="mb-3">

@@ -1,11 +1,13 @@
 <?php
 session_start();
 
+date_default_timezone_set('Asia/Jakarta');
+
 //atur koneksi ke database
 $host_db = "localhost";
 $user_db = "root";
 $pass_db = "";
-$nama_db = "ppdb";
+$nama_db = "sekolah";
 
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 if (!$koneksi) {
@@ -15,25 +17,18 @@ if (!$koneksi) {
 $nisn = "";
 $tanggal_pendaftaran = "";
 $username_petugas = "";
-$formulir = "";
 
 $error = "";
 $sukses = "";
 
 if (isset($_POST['simpan'])) {
     $nisn = $_POST['nisn'];
-    $tanggal_pendaftaran = $_POST['tanggal_pendaftaran'];
+    $tanggal_pendaftaran = date('Y-m-d');;
     $username_petugas = $_POST['username_petugas'];
-    $formulir = $_FILES['formulir']['name'];
 
-
-    // Pindahkan file-file yang diunggah ke direktori yang sesuai
-    $upload_directory = '../../file/';
-    move_uploaded_file($_FILES['formulir']['tmp_name'], $upload_directory . $formulir);
-
-    if ($nisn && $tanggal_pendaftaran && $username_petugas && $formulir) {
-        $sql1 = "INSERT INTO pendaftaran (nisn, tanggal_pendaftaran ,username_petugas ,formulir) 
-        VALUES ('$nisn','$tanggal_pendaftaran', '$username_petugas', '$formulir')";
+    if ($nisn && $tanggal_pendaftaran && $username_petugas) {
+        $sql1 = "INSERT INTO pendaftaran (nisn, tanggal_pendaftaran ,username_petugas) 
+        VALUES ('$nisn','$tanggal_pendaftaran', '$username_petugas')";
 
         $q1 = mysqli_query($koneksi, $sql1);
         if ($q1) {
@@ -201,16 +196,12 @@ if (isset($_POST['simpan'])) {
                         <div class="mb-3">
                             <label for="tanggal_pendaftaran" class="form-label">Tanggal Pendaftaran</label>
                             <input type="text" class="form-control form-control-md w-50" id="tanggal_pendaftaran"
-                                name="tanggal_pendaftaran" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                name="tanggal_pendaftaran" value="<?php echo date('d/m/Y'); ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="username_petugas" class="form-label">Petugas</label>
                             <input type="text" class="form-control form-control-md w-50" id="username_petugas"
                             name="username_petugas" value="admin" readonly>
-                        </div>
-                        <div class="mb-3 mt-3">
-                            <label for="formulir" class="form-label">Formulir</label>
-                            <input class="form-control form-control-sm w-50" id="formulir" name="formulir" type="file">
                         </div>
                         <hr>
                         <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>

@@ -4,7 +4,7 @@ session_start();
 $host_db = "localhost";
 $user_db = "root";
 $pass_db = "";
-$nama_db = "ppdb";
+$nama_db = "sekolah";
 
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 if (!$koneksi) {
@@ -12,6 +12,7 @@ if (!$koneksi) {
 }
 
 $npsn = "";
+$nisn = "";
 $nama_sekolah = "";
 $alamat_sekolah = "";
 $telepon_sekolah = "";
@@ -21,13 +22,14 @@ $sukses = "";
 
 if (isset($_POST['simpan'])) {
     $npsn = $_POST['npsn'];
+    $nisn = $_POST['nisn'];
     $nama_sekolah = $_POST['nama_sekolah'];
     $alamat_sekolah = $_POST['alamat_sekolah'];
     $telepon_sekolah = $_POST['telepon_sekolah'];
 
-    if ($npsn && $nama_sekolah && $alamat_sekolah && $telepon_sekolah) {
-        $sql1 = "INSERT INTO asal_sekolah (npsn, nama_sekolah, alamat_sekolah, telepon_sekolah) 
-        VALUES ('$npsn','$nama_sekolah', '$alamat_sekolah', '$telepon_sekolah')";
+    if ($npsn && $nisn && $nama_sekolah && $alamat_sekolah && $telepon_sekolah) {
+        $sql1 = "INSERT INTO asal_sekolah (npsn, nisn, nama_sekolah, alamat_sekolah, telepon_sekolah) 
+        VALUES ('$npsn','$nisn','$nama_sekolah', '$alamat_sekolah', '$telepon_sekolah')";
 
         $q1 = mysqli_query($koneksi, $sql1);
         if ($q1) {
@@ -190,6 +192,10 @@ if (isset($_POST['simpan'])) {
                         <div class="mb-3">
                             <label for="npsn" class="form-label">NPSN Asal Sekolah</label>
                             <input type="number" class="form-control w-50" id="npsn" placeholder="Masukkan NPSN" name="npsn" value="<?php echo $npsn ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nisn" class="form-label">NISN</label>
+                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN untuk kembali keperluan database" name="nisn" value="<?php echo $nisn ?>">
                         </div>
                         <div class="mb-3">
                             <label for="nama_sekolah" class="form-label">Nama Asal Sekolah</label>

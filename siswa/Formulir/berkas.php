@@ -4,7 +4,7 @@ session_start();
 $host_db = "localhost";
 $user_db = "root";
 $pass_db = "";
-$nama_db = "ppdb";
+$nama_db = "sekolah";
 
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 if (!$koneksi) {
@@ -12,6 +12,7 @@ if (!$koneksi) {
 }
 
 $no_skl = "";
+$nisn = "";
 $jalur = "";
 $skl = "";
 $kk = "";
@@ -22,6 +23,7 @@ $sukses = "";
 
 if (isset($_POST['simpan'])) {
     $no_skl = $_POST['no_skl'];
+    $nisn = $_POST['nisn'];
     $jalur = $_POST['jalur'];
     $skl = $_FILES['skl']['name'];
     $kk = $_FILES['kk']['name'];
@@ -33,9 +35,9 @@ if (isset($_POST['simpan'])) {
     move_uploaded_file($_FILES['kk']['tmp_name'], $upload_directory . $kk);
     move_uploaded_file($_FILES['berkas']['tmp_name'], $upload_directory . $berkas);
 
-    if ($no_skl && $jalur && $skl && $kk && $berkas) {
-        $sql1 = "INSERT INTO berkas (no_skl, jalur, skl, kk, berkas) 
-        VALUES ('$no_skl','$jalur', '$skl', '$kk', '$berkas')";
+    if ($no_skl && $nisn && $jalur && $skl && $kk && $berkas) {
+        $sql1 = "INSERT INTO berkas (no_skl, nisn, jalur, skl, kk, berkas) 
+        VALUES ('$no_skl','$nisn','$jalur', '$skl', '$kk', '$berkas')";
 
         $q1 = mysqli_query($koneksi, $sql1);
         if ($q1) {
@@ -193,11 +195,16 @@ if (isset($_POST['simpan'])) {
                         <?php
                     }
                     ?>
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="no_skl" class="form-label">Nomor SKL</label>
                             <input type="number" class="form-control w-50" id="no_skl" placeholder="Masukkan Nomor KK"
                                 name="no_skl" value="<?php echo $no_skl ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nisn" class="form-label">NISN</label>
+                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN untuk kebutuhan Database"
+                                name="nisn" value="<?php echo $nisn ?>">
                         </div>
                         <div class="mb-3">
                             <label for="jalur">Jalur</label>
@@ -235,7 +242,6 @@ if (isset($_POST['simpan'])) {
                             </div>
                             <hr>
                             <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
-                            <button type="submit" class="btn btn-primary" name="simpan">Download Formulir yang Telah Diisi</button>
                         </form>
                     </div>
                 </div>

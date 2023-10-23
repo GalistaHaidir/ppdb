@@ -1,3 +1,51 @@
+<?php
+session_start();
+$host_db = "localhost";
+$user_db = "root";
+$pass_db = "";
+$nama_db = "sekolah";
+
+$koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
+if (!$koneksi) {
+    die("Tidak bisa terkoneksi ke database");
+}
+
+$nama = "";
+$email = "";
+$nisn = "";
+$no_kk = "";
+$npsn = "";
+$jenis_kelamin = "";
+$tempat_lahir = "";
+$tanggal_lahir = "";
+$no_hp = "";
+$jumlah_saudara = "";
+$anak_ke = "";
+$alamat = "";
+
+// Mengambil data dari nisn dengan fungsi get (PERHATIKAN: Anda perlu menangani ini dengan baik untuk menghindari SQL Injection)
+$nisn = mysqli_real_escape_string($koneksi, $_GET['nisn']);
+
+// Mengambil data dari tabel sekolah dengan query SQL yang aman
+$query = "SELECT * FROM sekolah WHERE nisn = '$nisn'";
+$result = mysqli_query($koneksi, $query);
+
+if (!$result) {
+    die("Kesalahan dalam query: " . mysqli_error($koneksi));
+}
+
+// Mengekstrak data siswa
+$nisn = mysqli_fetch_assoc($result);
+
+if (!$nisn) {
+    die("Data siswa tidak ditemukan.");
+}
+
+// Sekarang Anda dapat mengakses data siswa dengan $siswa['nama_kolom']
+// Contoh: $nama = $siswa['nama'];
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -15,6 +63,18 @@
 
     <!-- FAVICON -->
     <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
+
+    <!-- PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        #elem {
+  height: 100%;
+  overflow: hidden;
+}
+    </style>
 </head>
 
 <body>
@@ -58,20 +118,20 @@
                 </li>
                 <li class="">
                     <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-filetype-pdf"></i>
+                        <i class="bi bi-filetype-pdf"></i>
                         Berkas
                     </a>
                 </li>
                 <li class="active">
-                    <a href="../Formulir/preview.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-file-earmark-check"></i>
-                    Preview
+                    <a href="../Formulir/preview.php>" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-file-earmark-check"></i>
+                        Preview
                     </a>
                 </li>
                 <li class="">
                     <a href="../Formulir/pendaftaran.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-pencil-square"></i>
-                    Pendaftaran
+                        <i class="bi bi-pencil-square"></i>
+                        Pendaftaran
                     </a>
                 </li>
             </ul>
@@ -120,37 +180,186 @@
             <!-- TABLE -->
             <div class="container">
                 <div class="col-md my-4 mx-2">
-                    <h3 class="fw-bold text-uppercase"><i class="bi bi-file-earmark-check"></i>&nbsp;Preview
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-file-earmark-check"></i>&nbsp;Halaman Preview
                     </h3>
                 </div>
                 <hr>
-                <div class="col-md my-2 mx-2">
-                    <form action="" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                            <label for="nisn" class="form-label">NISN</label>
-                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN" name="nisn">
+                <div class="col-md my-2 mx-2" id="elem">
+                    <!-- Biodata -->
+                    <h5><strong>A. Data Diri Siswa</strong></h5>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nama Lengkap</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
                         </div>
-                        <div class="mb-3">
-                            <label for="tanggal_pendaftaran" class="form-label">Tanggal Pendaftaran</label>
-                            <input type="text" class="form-control form-control-md w-50" id="tanggal_pendaftaran"
-                                placeholder="Masukkan Nama Asal Sekolah" name="tanggal_pendaftaran" value="<?php echo date('Y-m-d'); ?>">
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
                         </div>
-                        <div class="mb-3">
-                            <label for="petugas" class="form-label">Petugas</label>
-                            <input type="text" class="form-control form-control-md w-50" id="petugas"
-                                placeholder="" name="petugas" value="">
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">NISN</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
                         </div>
-                        <div class="mb-3 mt-3">
-                                <label for="formulir" class="form-label">Formulir</label>
-                                <input class="form-control form-control-sm w-50" id="formulir" name="formulir" type="file">
-                            </div>
-                        <hr>
-                        <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
-                    </form>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nomor Kartu Keluarga</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">NPSN Asal Sekolah</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Tempat Lahir</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Tanggal Lahir</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nomor HP Siswa</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Jumlah Saudara</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Anak Ke - </label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Alamat</label>
+                        <div class="col-sm-10">
+                            <textarea type="text" readonly class="form-control-plaintext form-control-md w-100">:</textarea>
+                        </div>
+                    </div>
+                    <!-- Data Orang Tua -->
+                    <h5><strong>B. Data Orang Tua</strong></h5>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nomor Kartu Keluarga</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nama Lengkap Ayah</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Pendidikan Terakhir Ayah</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Penghasilan Perbulan Ayah</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nama Lengkap Ibu</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Pendidikan Terakhir Ibu</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Penghasilan Perbulan Ibu</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nomor HP Orang Tua</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Alamat Orang Tua</label>
+                        <div class="col-sm-10">
+                            <textarea type="text" readonly class="form-control-plaintext form-control-md w-100">:</textarea>
+                        </div>
+                    </div>
+                    <!-- Data Asal Sekolah -->
+                    <h5><strong>C. Data Asal Sekolah</strong></h5>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">NPSN Sekolah Asal</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nama Sekolah Asal</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nomor Telepon Sekolah Asal</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Alamat Asal Sekolah</label>
+                        <div class="col-sm-10">
+                            <textarea type="text" readonly class="form-control-plaintext form-control-md w-100">:</textarea>
+                        </div>
+                    </div>
+                    <!-- Berkas Persyaratan -->
+                    <h5><strong>D. Berkas Persyaratan</strong></h5>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Nomor SKL</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Jalur</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext form-control-md w-100" value=":">
+                        </div>
+                    </div>
+                    <hr>
+                    <button id="download" type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                    <a href="preview.php?op=edit&nisn=<?php echo $nisn?>"></a>
                 </div>
             </div>
-
-
         </div>
     </div>
     </div>
@@ -175,6 +384,18 @@
         $('.close-btn').on('click', function () {
             $('.sidebar').removeClass('active');
         });
+    </script>
+
+    <!-- PDF -->
+    <script>
+        let div = document.getElementById("elem");
+        let btn = document.getElementById("download");
+        btn.addEventListener('click', () => {
+            html2pdf()
+            .from(div)
+            .set({ format: 'Letter', margin: 10 })
+            .save()
+        })
     </script>
 
 </body>
