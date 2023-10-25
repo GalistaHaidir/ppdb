@@ -1,3 +1,27 @@
+<?php
+session_start();
+//atur koneksi ke database
+$host_db = "localhost";
+$user_db = "root";
+$pass_db = "";
+$nama_db = "sekolah";
+
+$koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
+if (!$koneksi) {
+    die("TIdak bisa terkoneksi ke database");
+}
+
+$no_kk = "";
+$nama_ayah = "";
+$pendidikan_ayah = "";
+$penghasilan_ayah = "";
+$nama_ibu = "";
+$pendidikan_ibu = "";
+$penghasilan_ibu = "";
+$no_hportu = "";
+$alamat_ortu = "";
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -11,15 +35,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
 
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
-
 </head>
 
 <body>
@@ -44,19 +67,43 @@
                     </a>
                 </li>
                 <li class="">
-                    <a href="../DataPendaftar/datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
                         Data Pendaftar
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/administrasi_admin.php" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-person-badge"></i>
+                        Data Siswa
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="dataortu.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-people-fill"></i>
+                        Data Orang Tua
+                    </a>
+                </li>
+                <li class="">
+                    <a href="datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-building"></i>
+                        Data Sekolah
+                    </a>
+                </li>
+                <li class="">
+                    <a href="databerkas.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-filetype-pdf"></i>
+                        Data Berkas
+                    </a>
+                </li>
+                <li class="">
+                    <a href="administrasi_admin.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-calculator"></i>
                         Pembayaran
                     </a>
                 </li>
-                <li class="active">
-                    <a href="../Administrasi/datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
+                <li class="">
+                    <a href="datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
                         Data Pembayaran
                     </a>
@@ -105,43 +152,59 @@
             </nav>
 
             <!-- TABLE -->
-            <!-- TABLE -->
             <div class="container">
                 <div class="card mt-3">
                     <div class="card-body">
-                        <h1 class="display-4"><b>Data Pembayaran</b></h1>
+                        <h1 class="display-4"><b>Data Pendaftar</b></h1>
                         <table id="example" class="display nowrap" style="max-width: 95%;">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
+                                    <th>No.</th>
+                                    <th>Nama Ayah</th>
+                                    <th>Nama Ibu</th>
+                                    <th>Telepon</th>
+                                    <th>Alamat</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011-04-25</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary">Primary</button>
-                                        <button type="button" class="btn btn-primary">Primary</button>
-                                    </td>
-                                </tr>
+                                <?php
+                                $sql2 = "select * from orang_tua order by id_ortu desc";
+                                $q2 = mysqli_query($koneksi, $sql2);
+                                $urut = 1;
+                                while ($r2 = mysqli_fetch_array($q2)) {
+                                    $nama_ayah = $r2['nama_ayah'];
+                                    $nama_ibu = $r2['nama_ibu'];
+                                    $no_hportu = $r2['no_hportu'];
+                                    $alamat_ortu = $r2['alamat_ortu'];
+                                    ?>
+                                    <tr>
+                                        <th scope="row">
+                                            <?php echo $urut++ ?>
+                                        </th>
+                                        <td scope="row">
+                                            <?php echo $nama_ayah ?>
+                                        </td>
+                                        <td scope="row">
+                                            <?php echo $nama_ibu ?>
+                                        </td>
+                                        <td scope="row">
+                                            <?php echo $no_hportu ?>
+                                        </td>
+                                        <td scope="row">
+                                            <?php echo $alamat_ortu ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                }
+                                ?>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
+                                    <th>No.</th>
+                                    <th>Nama Ayah</th>
+                                    <th>Nama Ibu</th>
+                                    <th>Telepon</th>
+                                    <th>Alamat</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -193,7 +256,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>

@@ -23,7 +23,7 @@ $sukses = "";
 
 if (isset($_POST['simpan'])) {
     $nisn = $_POST['nisn'];
-    $tanggal_pendaftaran = date('Y-m-d');;
+    $tanggal_pendaftaran = date('Y-m-d');
     $username_petugas = $_POST['username_petugas'];
 
     if ($nisn && $tanggal_pendaftaran && $username_petugas) {

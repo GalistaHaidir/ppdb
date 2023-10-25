@@ -4,7 +4,7 @@ session_start();
 $host_db = "localhost";
 $user_db = "root";
 $pass_db = "";
-$nama_db = "ppdb";
+$nama_db = "sekolah";
 
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 if (!$koneksi) {
@@ -12,29 +12,24 @@ if (!$koneksi) {
 }
 date_default_timezone_set('Asia/Jakarta');
 
-
-$tanggal_pembayaran = "";
-$jenis_pembayaran = "";
+$nisn = "";
+$tanggal = "";
+$jenis_bayar = "";
 $harga = "";
-$subtotal = "";
-$bayar = "";
-$kembalian = "";
+$nama_barang = "";
 
 $error = "";
 $sukses = "";
 
 if (isset($_POST['simpan'])) {
-    $tanggal_pembayaran = $_POST['tanggal_pembayaran'];
-    $jenis_pembayaran = $_POST['jenis_pembayaran'];
+    $nisn = $_POST['nisn'];
+    $tanggal = date('Y-m-d');
+    $jenis_bayar = $_POST['jenis_bayar'];
     $harga = $_POST['harga'];
-    $subtotal = $_POST['subtotal'];
-    $bayar = $_POST['bayar'];
-    $kembalian = $_POST['kembalian'];
 
-
-    if ($tanggal_pembayaran && $jenis_pembayaran && $harga && $subtotal && $bayar && $kembalian) {
-        $sql1 = "INSERT INTO pembayaran (tanggal_pembayaran, jenis_pembayaran, harga, subtotal, bayar, kembalian)
-        VALUES ('$tanggal_pembayaran', '$jenis_pembayaran', '$harga', '$subtotal', '$bayar', '$kembalian')";
+    if ($nisn && $tanggal && $jenis_bayar && $harga) {
+        $sql1 = "INSERT INTO daftar_ulang (nisn, tanggal, jenis_bayar, harga)
+        VALUES ('$nisn', '$tanggal', '$jenis_bayar', '$harga')";
 
         $q1 = mysqli_query($koneksi, $sql1);
         if ($q1) {
@@ -60,10 +55,10 @@ if (isset($_POST['simpan'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
 
     <!-- PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
@@ -94,19 +89,43 @@ if (isset($_POST['simpan'])) {
                     </a>
                 </li>
                 <li class="">
-                    <a href="../DataPendaftar/datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
                         Data Pendaftar
                     </a>
                 </li>
+                <li class="">
+                    <a href="datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-person-badge"></i>
+                        Data Siswa
+                    </a>
+                </li>
+                <li class="">
+                    <a href="dataortu.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-people-fill"></i>
+                        Data Orang Tua
+                    </a>
+                </li>
+                <li class="">
+                    <a href="datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-building"></i>
+                        Data Sekolah
+                    </a>
+                </li>
+                <li class="">
+                    <a href="databerkas.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-filetype-pdf"></i>
+                        Data Berkas
+                    </a>
+                </li>
                 <li class="active">
-                    <a href="../Administrasi/administrasi_admin.php" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="administrasi_admin.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-calculator"></i>
                         Pembayaran
                     </a>
                 </li>
                 <li class="">
-                    <a href="../Administrasi/datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
                         Data Pembayaran
                     </a>
@@ -164,7 +183,7 @@ if (isset($_POST['simpan'])) {
                         <div class="col">
                             <form method="POST">
                                 <div class="p-3 border" style="border-radius: 10px;">
-                                    <div style="margin-bottom: 10px;"><b>Kalkulator</b></div>
+                                    <div style="margin-bottom: 10px;"><b>Input Data</b></div>
                                     <?php
                                     if ($error) {
                                         ?>
@@ -184,25 +203,32 @@ if (isset($_POST['simpan'])) {
                                     }
                                     ?>
                                     <div class="row mb-3">
-                                        <label for="tanggal_pembayaran" class="col-sm-2 col-form-label">Tanggal</label>
+                                        <label for="nisn" class="col-sm-2 col-form-label">NISN</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="tanggal_pembayaran"
-                                                name="tanggal_pembayaran" value="<?php echo date('d/m/Y'); ?>" readonly>
+                                            <input type="text" class="form-control" id="nisn" name="nisn"
+                                                value="<?php echo $nisn; ?>">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="jenis_pembayaran" class="col-sm-2 col-form-label">Kode</label>
+                                        <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
                                         <div class="col-sm-10">
-                                            <select class="form-select" name="jenis_pembayaran"
+                                            <input type="text" class="form-control" id="tanggal" name="tanggal"
+                                                value="<?php echo date('d/m/Y, H:i'); ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="jenis_bayar" class="col-sm-2 col-form-label">Kode</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-select" name="jenis_bayar"
                                                 aria-label="Default select example">
                                                 <option selected>- Pilih Jenis Pembayaran -</option>
-                                                <option value="Daftar Ulang" <?php if ($jenis_pembayaran == "Daftar Ulang")
+                                                <option value="Daftar Ulang" <?php if ($jenis_bayar == "Daftar Ulang")
                                                     echo "selected" ?>>
                                                         Daftar Ulang</option>
-                                                    <option value="Buku" <?php if ($jenis_pembayaran == "Buku")
+                                                    <option value="Buku" <?php if ($jenis_bayar == "Buku")
                                                     echo "selected" ?>>Buku
                                                     </option>
-                                                    <option value="Seragam" <?php if ($jenis_pembayaran == "Seragam")
+                                                    <option value="Seragam" <?php if ($jenis_bayar == "Seragam")
                                                     echo "selected" ?>>Seragam
                                                     </option>
                                                 </select>
@@ -211,41 +237,33 @@ if (isset($_POST['simpan'])) {
                                         <div class="row mb-3">
                                             <label for="harga" class="col-sm-2 col-form-label">Harga</label>
                                             <div class="col-sm-10">
+                                                <?php
+                                                // Query untuk mengambil harga berdasarkan nama barang
+                                                $query = "SELECT harga FROM barang WHERE nama_barang = '$nama_barang'";
+                                                $result = mysqli_query($koneksi, $query);
+
+                                                // Periksa apakah query berhasil
+                                                if ($result && mysqli_num_rows($result) > 0) {
+                                                    $row = mysqli_fetch_assoc($result);
+                                                    $harga = $row['harga'];
+                                                    ?>
                                                 <input type="number" class="form-control w-50" id="harga" name="harga"
-                                                    value="<?php echo $harga ?>">
+                                                    value="<?php echo $harga; ?>" readonly>
+                                                <?php
+                                                } else {
+                                                    echo "Data harga tidak ditemukan.";
+                                                }
+
+                                                // Tutup koneksi database
+                                                mysqli_close($koneksi);
+                                                ?>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <label for="subtotal" class="col-sm-2 col-form-label">Subtotal</label>
-                                        <div class="col-sm-10">
-                                            <input type="number" class="form-control w-50" id="subtotal" name="subtotal"
-                                                value="<?php echo $subtotal ?>">
-                                        </div>
-                                    </div>
+
                                     <div class="row mb-3">
                                         <a href="">
                                             <button type="button" class="btn btn-outline-warning mt-2 float-end">
                                                 <i class="bi bi-plus-square-fill"></i> Tambah</button>
-                                        </a>
-                                    </div>
-                                    <hr>
-                                    <div class="row mb-3">
-                                        <label for="bayar" class="col-sm-2 col-form-label">Bayar</label>
-                                        <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="bayar" name="bayar"
-                                                value="<?php echo $bayar ?>">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <label for="kembalian" class="col-sm-2 col-form-label">Kembalian</label>
-                                        <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="inputPassword"
-                                                name="kembalian" value="<?php echo $kembalian ?>">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <a href="">
-                                            <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                                         </a>
                                     </div>
                                 </div>
@@ -255,7 +273,7 @@ if (isset($_POST['simpan'])) {
                         <!-- Nota -->
                         <div class="col" id="elem">
                             <div class="p-3 border" id="cetak" style="border-radius: 10px;">
-                                <div style="text-align: center;"><b>Daftar Ulang</b></div>
+                                <div style="text-align: center;"><b>Kwitansi</b></div>
                                 <div style="text-align: center;">Jl. Ketintang, Ketintang, Kec. Gayungan, Surabaya,
                                     Jawa
                                     Timur 60231</div>
@@ -286,11 +304,6 @@ if (isset($_POST['simpan'])) {
                                 </table>
                                 <br>
                                 <hr>
-                                <div class="tlpn" style="float: left;">Total : </div>
-                                <br>
-                                <div class="kasir" style="float: left;">Bayar : </div>
-                                <br>
-                                <div class="kasir" style="float: left;">Kembalian : </div>
                                 <br><br>
                                 <div style="text-align: center;">* Terima Kasih Telah Melakukan Daftar Ulang *</div>
                             </div>
@@ -298,7 +311,6 @@ if (isset($_POST['simpan'])) {
                                 <button type="button" class="btn btn-outline-primary mt-2 float-end"><i
                                         class="bi bi-printer-fill"></i> Print</button>
                             </a>
-                            <button id="download" type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                         </div>
                     </div>
                 </div>
