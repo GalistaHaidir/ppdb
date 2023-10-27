@@ -62,11 +62,60 @@ if (isset($_POST['simpan'])) {
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="../../css/style.css">
-
     <!-- FAVICON -->
     <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
+
+    <style>
+        body {
+            background: ##fff;
+        }
+
+        .sidebar{
+            border-right: 1px solid #000;
+        }
+        #side_nav {
+            background: #f7f7f7;
+            min-width: 250px;
+            max-width: 250px;
+        }
+
+        .content {
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        hr.h-color {
+            background: #333;
+            height: 1.2px;
+        }
+
+        .sidebar li.active {
+            background: #23663b;
+            border-radius: 8px;
+        }
+
+        .sidebar li.active a,
+        .sidebar li.active a:hover {
+            color: #ffffff;
+        }
+
+        .sidebar li a {
+            color: #333;
+        }
+
+        @media(max-width: 767px) {
+            #side_nav {
+                margin-left: -250px;
+                position: fixed;
+                min-height: 100vh;
+                z-index: 1;
+            }
+
+            #side_nav.active {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -76,10 +125,11 @@ if (isset($_POST['simpan'])) {
         <div class="sidebar" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4">
-                    <span class="bg-white text-dark rounded shadow px-2 me-2">PPDB</span>
-                    <span class="text-white">Siswa</span>
+                <span class="rounded shadow px-2"
+                        style="background-color: #247854; color:#fff">PPDB</span>
+                    <span class="text-dark">Siswa</span>
                 </h1>
-                <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
+                <button class="btn d-md-none d-block close-btn px-1 py-0 text-dark">
                     <i class="bi bi-list-nested"></i>
                 </button>
             </div>
@@ -142,7 +192,7 @@ if (isset($_POST['simpan'])) {
 
         <!-- CONTENT -->
         <div class="content">
-            <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <nav class="navbar navbar-expand-md">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2">
@@ -153,18 +203,6 @@ if (isset($_POST['simpan'])) {
                                 PPDB
                             </span>
                         </a>
-                    </div>
-                    <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="bi bi-list-nested"></i>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                        <ul class="navbar-nav mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link disabled" aria-current="page" href="#">Dashboard</a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </nav>

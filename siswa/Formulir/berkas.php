@@ -25,15 +25,9 @@ if (isset($_POST['simpan'])) {
     $no_skl = $_POST['no_skl'];
     $nisn = $_POST['nisn'];
     $jalur = $_POST['jalur'];
-    $skl = $_FILES['skl']['name'];
-    $kk = $_FILES['kk']['name'];
-    $berkas = $_FILES['berkas']['name'];
-
-    // Pindahkan file-file yang diunggah ke direktori yang sesuai
-    $upload_directory = '../../file/';
-    move_uploaded_file($_FILES['skl']['tmp_name'], $upload_directory . $skl);
-    move_uploaded_file($_FILES['kk']['tmp_name'], $upload_directory . $kk);
-    move_uploaded_file($_FILES['berkas']['tmp_name'], $upload_directory . $berkas);
+    $skl = upload('skl'); // Memanggil fungsi upload untuk berkas skl
+    $kk = upload('kk'); // Memanggil fungsi upload untuk berkas kk
+    $berkas = upload('berkas'); // Memanggil fungsi upload untuk berkas berkas
 
     if ($no_skl && $nisn && $jalur && $skl && $kk && $berkas) {
         $sql1 = "INSERT INTO berkas (no_skl, nisn, jalur, skl, kk, berkas) 
@@ -49,6 +43,56 @@ if (isset($_POST['simpan'])) {
         $error = "Silahkan masukkan semua data";
     }
 }
+// Membuat fungsi upload gambar
+function upload($jenisBerkas)
+{
+    // Variabel-variabel yang diperlukan
+    $namaFile = $_FILES[$jenisBerkas]['name'];
+    $ukuranFile = $_FILES[$jenisBerkas]['size'];
+    $error = $_FILES[$jenisBerkas]['error'];
+    $tmpName = $_FILES[$jenisBerkas]['tmp_name'];
+
+    // Inisialisasi pesan kesalahan
+    $pesanKesalahan = "";
+
+    // Jika tidak mengupload gambar atau tidak memenuhi persyaratan di bawah, akan mengembalikan pesan kesalahan
+    if ($error === 4) {
+        $pesanKesalahan = "Pilih gambar terlebih dahulu untuk $jenisBerkas!";
+    } else {
+        // Format atau ekstensi yang diperbolehkan untuk mengunggah gambar adalah
+        $extValid = ['jpg', 'jpeg', 'png'];
+        $ext = pathinfo($namaFile, PATHINFO_EXTENSION);
+
+        // Jika format atau ekstensi bukan gambar, akan mengembalikan pesan kesalahan
+        if (!in_array($ext, $extValid)) {
+            $pesanKesalahan = "File yang anda upload untuk $jenisBerkas bukan gambar!";
+        }
+
+        // Jika ukuran gambar lebih dari 3.000.000 byte, akan mengembalikan pesan kesalahan
+        if ($ukuranFile > 3000000) {
+            $pesanKesalahan = "Ukuran gambar $jenisBerkas terlalu besar!";
+        }
+    }
+
+    // Jika ada pesan kesalahan, tampilkan pesan dan mengembalikan false
+    if ($pesanKesalahan) {
+        echo "<script>alert('$pesanKesalahan');</script>";
+        return false;
+    }
+
+    // nama gambar akan berubah angka acak/unik jika sudah berhasil tersimpan
+    $namaFileBaru = uniqid();
+    $namaFileBaru .= '.';
+    $namaFileBaru .= $ext;
+
+    // Memindahkan file ke dalam folder 'file' dengan nama asli
+    $folderTujuan = '../../file/';
+    move_uploaded_file($tmpName, $folderTujuan . $namaFileBaru);
+
+    // Mengembalikan nama file asli
+    return $namaFileBaru;
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -62,11 +106,60 @@ if (isset($_POST['simpan'])) {
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="../../css/style.css">
-
     <!-- FAVICON -->
     <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
+
+    <style>
+        body {
+            background: ##fff;
+        }
+
+        .sidebar{
+            border-right: 1px solid #000;
+        }
+        #side_nav {
+            background: #f7f7f7;
+            min-width: 250px;
+            max-width: 250px;
+        }
+
+        .content {
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        hr.h-color {
+            background: #333;
+            height: 1.2px;
+        }
+
+        .sidebar li.active {
+            background: #23663b;
+            border-radius: 8px;
+        }
+
+        .sidebar li.active a,
+        .sidebar li.active a:hover {
+            color: #ffffff;
+        }
+
+        .sidebar li a {
+            color: #333;
+        }
+
+        @media(max-width: 767px) {
+            #side_nav {
+                margin-left: -250px;
+                position: fixed;
+                min-height: 100vh;
+                z-index: 1;
+            }
+
+            #side_nav.active {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -76,10 +169,11 @@ if (isset($_POST['simpan'])) {
         <div class="sidebar" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4">
-                    <span class="bg-white text-dark rounded shadow px-2 me-2">PPDB</span>
-                    <span class="text-white">Siswa</span>
+                    <span class="rounded shadow px-2"
+                        style="background-color: #247854; color:#fff">PPDB</span>
+                    <span class="text-dark">Siswa</span>
                 </h1>
-                <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
+                <button class="btn d-md-none d-block close-btn px-1 py-0 text-dark">
                     <i class="bi bi-list-nested"></i>
                 </button>
             </div>
@@ -110,20 +204,20 @@ if (isset($_POST['simpan'])) {
                 </li>
                 <li class="active">
                     <a href="../Formulir/berkas.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-filetype-pdf"></i>
+                        <i class="bi bi-filetype-pdf"></i>
                         Berkas
                     </a>
                 </li>
                 <li class="">
                     <a href="../Formulir/preview.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-file-earmark-check"></i>
-                    Preview
+                        <i class="bi bi-file-earmark-check"></i>
+                        Preview
                     </a>
                 </li>
                 <li class="">
                     <a href="../Formulir/pendaftaran.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-pencil-square"></i>
-                    Pendaftaran
+                        <i class="bi bi-pencil-square"></i>
+                        Pendaftaran
                     </a>
                 </li>
             </ul>
@@ -142,7 +236,7 @@ if (isset($_POST['simpan'])) {
 
         <!-- CONTENT -->
         <div class="content">
-            <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <nav class="navbar navbar-expand-md">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2">
@@ -154,26 +248,13 @@ if (isset($_POST['simpan'])) {
                             </span>
                         </a>
                     </div>
-                    <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="bi bi-list-nested"></i>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                        <ul class="navbar-nav mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link disabled" aria-current="page" href="#">Dashboard</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </nav>
 
             <!-- TABLE -->
             <div class="container">
                 <div class="col-md my-4 mx-2">
-                    <h3 class="fw-bold text-uppercase"><i class="bi bi-filetype-pdf"></i>&nbsp;Berkas Persyaratan
-                    </h3>
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-filetype-pdf"></i>&nbsp;Berkas Persyaratan</h3>
                 </div>
                 <hr>
                 <div class="col-md my-2 mx-2">
@@ -203,24 +284,25 @@ if (isset($_POST['simpan'])) {
                         </div>
                         <div class="mb-3">
                             <label for="nisn" class="form-label">NISN</label>
-                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN untuk kebutuhan Database"
-                                name="nisn" value="<?php echo $nisn ?>">
+                            <input type="number" class="form-control w-50" id="nisn"
+                                placeholder="Masukkan NISN untuk kebutuhan Database" name="nisn"
+                                value="<?php echo $nisn ?>">
                         </div>
                         <div class="mb-3">
                             <label for="jalur">Jalur</label>
                             <div class="col-sm-6 mt-1">
                                 <select class="form-select" name="jalur" aria-label="Default select example">
                                     <option selected>- Pilih Jenis Jalur -</option>
-                                    <option value="afirmasi" <?php if ($jalur == "afirmasi")
+                                    <option value="Afimasi" <?php if ($jalur == "Afimasi")
                                         echo "selected" ?>>
                                             Afirmasi</option>
-                                        <option value="zonasi" <?php if ($jalur == "zonasi")
+                                        <option value="Zonasi" <?php if ($jalur == "Zonasi")
                                         echo "selected" ?>>Zonasi
                                         </option>
-                                        <option value="perpindahan" <?php if ($jalur == "perpindahan")
+                                        <option value="Perpindahan" <?php if ($jalur == "Perpindahan")
                                         echo "selected" ?>>Perpindahan
                                         </option>
-                                        <option value="prestasi" <?php if ($jalur == "prestasi")
+                                        <option value="Prestasi" <?php if ($jalur == "Prestasi")
                                         echo "selected" ?>>Prestasi
                                         </option>
                                     </select>
@@ -237,8 +319,7 @@ if (isset($_POST['simpan'])) {
                             <div class="mb-3">
                                 <label for="berkas" class="form-label">Berkas Yang Berkaitan dengan Jalur
                                     Pendaftaran</label>
-                                <input class="form-control form-control-sm w-50" id="berkas" name="berkas" type="file"
-                                    multiple>
+                                <input class="form-control form-control-sm w-50" id="berkas" name="berkas" type="file">
                             </div>
                             <hr>
                             <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>

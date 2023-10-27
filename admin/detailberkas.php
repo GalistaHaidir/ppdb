@@ -1,8 +1,5 @@
 <?php
 session_start();
-
-date_default_timezone_set('Asia/Jakarta');
-
 //atur koneksi ke database
 $host_db = "localhost";
 $user_db = "root";
@@ -14,11 +11,36 @@ if (!$koneksi) {
     die("TIdak bisa terkoneksi ke database");
 }
 
+$no_skl = "";
 $nisn = "";
-$tanggal_pendaftaran = "";
-$username_petugas = "";
-?>
+$jalur = "";
+$skl = "";
+$kk = "";
+$berkas = "";
 
+if (isset($_GET['no_skl'])) {
+    $no_skl = $_GET['no_skl'];
+
+    // Query SQL untuk mengambil data siswa berdasarkan no_skl
+    $query = "SELECT * FROM berkas WHERE no_skl = $no_skl";
+    $result = mysqli_query($koneksi, $query);
+
+    if ($result) {
+        // Mengambil data dari hasil query
+        $row = mysqli_fetch_assoc($result);
+        if ($row) {
+            $no_skl = $row['no_skl'];
+            $nisn = $row['nisn'];
+            $jalur = $row['jalur'];
+            $skl = $row['skl'];
+            $kk = $row['kk'];
+            $berkas = $row['berkas'];
+        }
+    }
+}
+
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -106,32 +128,33 @@ $username_petugas = "";
                         Dashboard
                     </a>
                 </li>
-                <li class="active">
+                <li class="">
                     <a href="datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
                         Data Pendaftar
                     </a>
-                    <li class="">
+                </li>
+                <li class="">
                     <a href="datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-person-badge"></i>
+                        <i class="bi bi-person-badge"></i>
                         Data Siswa
                     </a>
                 </li>
                 <li class="">
                     <a href="dataortu.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
                 </li>
                 <li class="">
                     <a href="datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-building"></i>
+                        <i class="bi bi-building"></i>
                         Data Sekolah
                     </a>
                 </li>
-                <li class="">
+                <li class="active">
                     <a href="databerkas.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-filetype-pdf"></i>
+                        <i class="bi bi-filetype-pdf"></i>
                         Data Berkas
                     </a>
                 </li>
@@ -160,7 +183,6 @@ $username_petugas = "";
                 </li>
             </ul>
         </div>
-
         <!-- CONTENT -->
         <div class="content">
             <nav class="navbar navbar-expand-md">
@@ -179,58 +201,60 @@ $username_petugas = "";
             </nav>
 
             <!-- TABLE -->
-            <div class="container">
-                <div class="card border-0">
-                    <div class="card-body">
-                        <h1 class="mb-3">Data Pendaftar</h1>
-                        <table id="example" class="display nowrap" style="max-width: 95%;">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>NISN</th>
-                                    <th>Tanggal Pendaftaran</th>
-                                    <th>Petugas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $sql2 = "select * from pendaftaran order by id_pendaftaran desc";
-                                $q2 = mysqli_query($koneksi, $sql2);
-                                $urut = 1;
-                                while ($r2 = mysqli_fetch_array($q2)) {
-                                    $nisn = $r2['nisn'];
-                                    $tanggal_pendaftaran = $r2['tanggal_pendaftaran'];
-                                    $username_petugas = $r2['username_petugas'];
-                                    ?>
-                                    <tr>
-                                        <th scope="row">
-                                            <?php echo $urut++ ?>
-                                        </th>
-                                        <td scope="row">
-                                            <?php echo $nisn ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $tanggal_pendaftaran ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $username_petugas ?>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>NISN</th>
-                                    <th>Tanggal Pendaftaran</th>
-                                    <th>Petugas</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+            <div class="container" id="cetak">
+                <div class="col-md my-4 mx-2">
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-filetype-pdf"></i>&nbsp;Detail Berkas Persyaratan
+                    </h3>
                 </div>
+                <hr>
+                <div class="col-md my-2 mx-2">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Nomor SKL</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $no_skl ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>NISN</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $nisn ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Jalur Penerimaan</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $jalur ?>">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="skl" class="form-label"><strong>Berkas SKL</strong></label> <br>
+                            <img src="../file/<?= $row['skl']; ?>" width="50%" style="margin-bottom: 10px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="kk" class="form-label"><strong>Berkas KK</strong></label><br>
+                            <img src="../file/<?= $row['kk']; ?>" width="50%" style="margin-bottom: 10px;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="berkas" class="form-label"><strong>Berkas Yang Berkaitan dengan Jalur
+                                    Pendaftaran</strong></label><br>
+                            <img src="../file/<?= $row['berkas']; ?>" width="50%" style="margin-bottom: 10px;">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md my-2 mx-4">
+                <hr>
+                <a href="databerkas.php">
+                    <button type="button" class="btn btn-secondary"><i
+                            class="bi bi-arrow-left-circle-fill me-1"></i>Kembali</button>
+                </a>
+                <a href="javascript:void(0);" onclick="printPageArea('cetak')">
+                    <button type="button" class="btn btn-primary"><i class="bi bi-printer-fill me-1"></i>Print</button>
+                </a>
             </div>
         </div>
     </div>
@@ -257,26 +281,16 @@ $username_petugas = "";
         });
     </script>
 
-    <!-- Jquery Table -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-
     <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'excel', 'pdf', 'print'
-                ]
-            });
-        });
+        function printPageArea(areaID) {
+            var printContent = document.getElementById(areaID).innerHTML;
+            var originalContent = document.body.innerHTML;
+            document.body.innerHTML = printContent; // Perbaikan 1
+            window.print();
+            document.body.innerHTML = originalContent; // Perbaikan 2
+        }
     </script>
+
 </body>
 
 </html>

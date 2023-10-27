@@ -54,17 +54,53 @@ if (isset($_POST['simpan'])) {
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/style.css">
-
     <!-- FAVICON -->
     <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
 
-    <!-- PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        body {
+            background: white;
+        }
 
+        #side_nav {
+            background: #000000;
+            min-width: 250px;
+            max-width: 250px;
+        }
+
+        .content {
+            min-height: 100vh;
+            width: 100%;
+        }
+
+
+        hr.h-color {
+            background: #edeeff;
+            height: 1.2px;
+        }
+
+        .sidebar li.active {
+            background: #474747;
+            border-radius: 8px;
+        }
+
+        .sidebar li a {
+            color: #fff;
+        }
+
+        @media(max-width: 767px) {
+            #side_nav {
+                margin-left: -250px;
+                position: fixed;
+                min-height: 100vh;
+                z-index: 1;
+            }
+
+            #side_nav.active {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -74,7 +110,8 @@ if (isset($_POST['simpan'])) {
         <div class="sidebar" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4">
-                    <span class="bg-white text-dark rounded shadow px-2 me-2">PPDB</span>
+                <span class="rounded shadow px-2"
+                        style="background-color: #258a31; color:#fff"><strong>PPDB</strong></span>
                     <span class="text-white">Admin</span>
                 </h1>
                 <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
@@ -96,25 +133,25 @@ if (isset($_POST['simpan'])) {
                 </li>
                 <li class="">
                     <a href="datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-person-badge"></i>
+                        <i class="bi bi-person-badge"></i>
                         Data Siswa
                     </a>
                 </li>
                 <li class="">
                     <a href="dataortu.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
                 </li>
                 <li class="">
                     <a href="datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-building"></i>
+                        <i class="bi bi-building"></i>
                         Data Sekolah
                     </a>
                 </li>
                 <li class="">
                     <a href="databerkas.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-filetype-pdf"></i>
+                        <i class="bi bi-filetype-pdf"></i>
                         Data Berkas
                     </a>
                 </li>
@@ -146,7 +183,7 @@ if (isset($_POST['simpan'])) {
 
         <!-- CONTENT -->
         <div class="content">
-            <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <nav class="navbar navbar-expand-md ">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2">
@@ -158,25 +195,13 @@ if (isset($_POST['simpan'])) {
                             </span>
                         </a>
                     </div>
-                    <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="bi bi-list-nested"></i>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                        <ul class="navbar-nav mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link disabled" aria-current="page" href="#">Data Pendaftar</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </nav>
 
             <!-- TABLE -->
             <div class="container">
                 <div class="row">
-                    <h1 class="display-4"><b>Pembayaran</b></h1>
+                    <h1>Pembayaran</h1>
 
                     <!-- Kalkulator -->
                     <div class="row">
@@ -271,7 +296,7 @@ if (isset($_POST['simpan'])) {
                         </div>
 
                         <!-- Nota -->
-                        <div class="col" id="elem">
+                        <div class="col">
                             <div class="p-3 border" id="cetak" style="border-radius: 10px;">
                                 <div style="text-align: center;"><b>Kwitansi</b></div>
                                 <div style="text-align: center;">Jl. Ketintang, Ketintang, Kec. Gayungan, Surabaya,
@@ -348,14 +373,6 @@ if (isset($_POST['simpan'])) {
             window.print();
             document.body.innerHTML = originalContent; // Perbaikan 2
         }
-    </script>
-
-    <script>
-        let div = document.getElementById("elem");
-        let btn = document.getElementById("download");
-        btn.addEventListener('click', () => {
-            html2pdf().from(div).save()
-        })
     </script>
 
 </body>

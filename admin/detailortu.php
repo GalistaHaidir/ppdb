@@ -10,6 +10,7 @@ $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 if (!$koneksi) {
     die("TIdak bisa terkoneksi ke database");
 }
+
 $id_ortu = "";
 $no_kk = "";
 $nama_ayah = "";
@@ -21,14 +22,30 @@ $penghasilan_ibu = "";
 $no_hportu = "";
 $alamat_ortu = "";
 
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-} else {
-    $op = "";
+if (isset($_GET['id_ortu'])) {
+    $id_ortu = $_GET['id_ortu'];
+
+    // Query SQL untuk mengambil data siswa berdasarkan id_ortu
+    $query = "SELECT * FROM orang_tua WHERE id_ortu = $id_ortu";
+    $result = mysqli_query($koneksi, $query);
+
+    if ($result) {
+        // Mengambil data dari hasil query
+        $row = mysqli_fetch_assoc($result);
+        if ($row) {
+            $no_kk = $row['no_kk'];
+            $nama_ayah = $row['nama_ayah'];
+            $pendidikan_ayah = $row['pendidikan_ayah'];
+            $penghasilan_ayah = $row['penghasilan_ayah'];
+            $nama_ibu = $row['nama_ibu'];
+            $pendidikan_ibu = $row['pendidikan_ibu'];
+            $penghasilan_ibu = $row['penghasilan_ibu'];
+            $no_hportu = $row['no_hportu'];
+            $alamat_ortu = $row['alamat_ortu'];
+        }
+    }
 }
-
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -101,7 +118,7 @@ if (isset($_GET['op'])) {
         <div class="sidebar" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4">
-                    <span class="rounded shadow px-2"
+                <span class="rounded shadow px-2"
                         style="background-color: #258a31; color:#fff"><strong>PPDB</strong></span>
                     <span class="text-white">Admin</span>
                 </h1>
@@ -171,10 +188,9 @@ if (isset($_GET['op'])) {
                 </li>
             </ul>
         </div>
-
         <!-- CONTENT -->
         <div class="content">
-            <nav class="navbar navbar-expand-md ">
+            <nav class="navbar navbar-expand-md">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2">
@@ -190,72 +206,89 @@ if (isset($_GET['op'])) {
             </nav>
 
             <!-- TABLE -->
-            <div class="container">
-                <div class="card border-0">
-                    <div class="card-body">
-                        <h1 class="mb-3">Data Orang Tua</h1>
-                        <table id="example" class="display nowrap" style="max-width: 95%;">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nama Ayah</th>
-                                    <th>Nama Ibu</th>
-                                    <th>Telepon</th>
-                                    <th>Alamat</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $sql2 = "select * from orang_tua order by id_ortu desc";
-                                $q2 = mysqli_query($koneksi, $sql2);
-                                $urut = 1;
-                                while ($r2 = mysqli_fetch_array($q2)) {
-                                    $id_ortu = $r2['id_ortu'];
-                                    $nama_ayah = $r2['nama_ayah'];
-                                    $nama_ibu = $r2['nama_ibu'];
-                                    $no_hportu = $r2['no_hportu'];
-                                    $alamat_ortu = $r2['alamat_ortu'];
-                                    ?>
-                                    <tr>
-                                        <th scope="row">
-                                            <?php echo $urut++ ?>
-                                        </th>
-                                        <td scope="row">
-                                            <?php echo $nama_ayah ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $nama_ibu ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $no_hportu ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $alamat_ortu ?>
-                                        </td>
-                                        <td scope="row">
-                                            <a href="detailortu.php?op=edit&id_ortu=<?php echo $id_ortu ?>">
-                                                <button type="button" class="btn btn-outline-warning">Detail</button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nama Ayah</th>
-                                    <th>Nama Ibu</th>
-                                    <th>Telepon</th>
-                                    <th>Alamat</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+            <div class="container" id="cetak">
+                <div class="col-md my-4 mx-2">
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-people-fill"></i>&nbsp;Data Orang Tua Siswa
+                    </h3>
                 </div>
+                <hr>
+                <div class="col-md my-2 mx-2">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Nomor Kartu Keluarga</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $no_kk ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Nama Lengkap Ayah</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $nama_ayah ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Pendidikan Terakhir Ayah</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $pendidikan_ayah ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Penghasilkan Perbulan Ayah</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $penghasilan_ayah ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Nama Lengkap Ibu</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $nama_ibu ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Pendidikan Terakhir Ibu</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $pendidikan_ibu ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Penghasilan Perbulan Ibu</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $penghasilan_ibu ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>No. Hp Orang Tua</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $no_hportu ?>">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label"><strong>Alamat</strong></label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
+                                    value=": <?php echo $alamat_ortu ?>">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md my-2 mx-4">
+                <hr>
+                <a href="dataortu.php">
+                    <button type="button" class="btn btn-secondary"><i
+                            class="bi bi-arrow-left-circle-fill me-1"></i>Kembali</button>
+                </a>
+                <a href="javascript:void(0);" onclick="printPageArea('cetak')">
+                    <button type="button" class="btn btn-primary"><i class="bi bi-printer-fill me-1"></i>Print</button>
+                </a>
             </div>
         </div>
     </div>
@@ -281,27 +314,16 @@ if (isset($_GET['op'])) {
             $('.sidebar').removeClass('active');
         });
     </script>
-
-    <!-- Jquery Table -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-
     <script>
-        $(document).ready(function () {
-            $('#example').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'excel', 'pdf', 'print'
-                ]
-            });
-        });
+        function printPageArea(areaID) {
+            var printContent = document.getElementById(areaID).innerHTML;
+            var originalContent = document.body.innerHTML;
+            document.body.innerHTML = printContent; // Perbaikan 1
+            window.print();
+            document.body.innerHTML = originalContent; // Perbaikan 2
+        }
     </script>
+
 </body>
 
 </html>

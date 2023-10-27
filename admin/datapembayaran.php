@@ -10,15 +10,57 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="../css/style.css">
-
     <!-- FAVICON -->
     <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
 
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+    <style>
+        body {
+            background: white;
+        }
+
+        #side_nav {
+            background: #000000;
+            min-width: 250px;
+            max-width: 250px;
+        }
+
+        .content {
+            min-height: 100vh;
+            width: 100%;
+        }
+
+
+        hr.h-color {
+            background: #edeeff;
+            height: 1.2px;
+        }
+
+        .sidebar li.active {
+            background: #474747;
+            border-radius: 8px;
+        }
+
+        .sidebar li a {
+            color: #fff;
+        }
+
+        @media(max-width: 767px) {
+            #side_nav {
+                margin-left: -250px;
+                position: fixed;
+                min-height: 100vh;
+                z-index: 1;
+            }
+
+            #side_nav.active {
+                margin-left: 0;
+            }
+        }
+    </style>
 
 </head>
 
@@ -29,7 +71,8 @@
         <div class="sidebar" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4">
-                    <span class="bg-white text-dark rounded shadow px-2 me-2">PPDB</span>
+                <span class="rounded shadow px-2"
+                        style="background-color: #258a31; color:#fff"><strong>PPDB</strong></span>
                     <span class="text-white">Admin</span>
                 </h1>
                 <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
@@ -101,7 +144,7 @@
 
         <!-- CONTENT -->
         <div class="content">
-            <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <nav class="navbar navbar-expand-md">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2">
@@ -113,27 +156,15 @@
                             </span>
                         </a>
                     </div>
-                    <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="bi bi-list-nested"></i>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                        <ul class="navbar-nav mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link disabled" aria-current="page" href="#">Data Pendaftar</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </nav>
 
             <!-- TABLE -->
             <!-- TABLE -->
             <div class="container">
-                <div class="card mt-3">
+                <div class="card border-0">
                     <div class="card-body">
-                        <h1 class="display-4"><b>Data Pembayaran</b></h1>
+                        <h1 class="mb-3">Data Pembayaran</h1>
                         <table id="example" class="display nowrap" style="max-width: 95%;">
                             <thead>
                                 <tr>
