@@ -28,7 +28,7 @@ if (isset($_POST['login'])) {
         if (empty($err)) {
             $_SESSION['session_username'] = $username;
             $_SESSION['session_password'] = md5($password);
-            header("location:admin/Dashboard/dashboard_admin.php");
+            header("location:admin/datapendaftar.php");
         }
     }
 }
@@ -126,9 +126,6 @@ if (isset($_POST['login'])) {
                     </div>
                     <div class="input-group mb-3">
                         <input type="submit" name="login" class="btn btn-lg btn-primary w-100 fs-6" value="Login">
-                    </div>
-                    <div class="row">
-                        <small>Don't have account? <a href="admin/Dashboard/dashboard_admin.php">Sign Up</a></small>
                     </div>
                     </form>
                 </div>
