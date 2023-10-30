@@ -160,8 +160,8 @@ if (isset($_POST['simpan'])) {
                 <li class="">
                     <a href="../siswa/datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-person-badge"></i>
-                        Data Siswa
-                    </a>
+                        Data Calon Siswa
+                    </a> 
                 </li>
                 <li class="active">
                     <a href="dataortu.php" class="text-decoration-none px-3 py-3 d-block">

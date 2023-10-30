@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Jakarta');
 //atur koneksi ke database
 $host_db = "localhost";
 $user_db = "root";
@@ -16,26 +17,37 @@ $id_pendaftaran = "";
 $nisn = "";
 $tanggal = "";
 $jenis_bayar = "";
+$keterangan = "";
 
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-} else {
-    $op = "";
-}
+$error = "";
+$sukses = "";
 
-if ($op == 'delete') {
-    $id_daftarulang = $_GET['id_daftarulang'];
-    $sql1 = "delete from daftar_ulang where id_daftarulang = '$id_daftarulang'";
-    $q1 = mysqli_query($koneksi, $sql1);
-    if ($q1) {
-        $sukses = "Berhasil hapus data";
+if (isset($_POST['simpan'])) {
+    $id_daftarulang = $_POST['id_daftarulang'];
+    $id_pendaftaran = $_POST['id_pendaftaran'];
+    $nisn = $_POST['nisn'];
+    $tanggal = date('Y-m-d');
+    $jenis_bayar = $_POST['jenis_bayar'];
+    $keterangan = $_POST['keterangan'];
+
+    $jenis_bayar = implode(",", $jenis_bayar);
+
+
+    if ($id_daftarulang && $id_pendaftaran && $nisn && $tanggal && $jenis_bayar && $keterangan) {
+        $sql1 = "INSERT INTO daftar_ulang (id_daftarulang, id_pendaftaran ,nisn, tanggal, jenis_bayar, keterangan )  
+        VALUES ('$id_daftarulang','$id_pendaftaran', '$nisn', '$tanggal', '$jenis_bayar', '$keterangan')";
+
+        $q1 = mysqli_query($koneksi, $sql1);
+        if ($q1) {
+            $sukses = "Berhasil memasukkan data baru";
+        } else {
+            $error = "Gagal memasukkan data";
+        }
     } else {
-        $error = "Gagal melakukan hapus data";
+        $error = "Silahkan masukkan semua data";
     }
 }
-
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -49,11 +61,12 @@ if ($op == 'delete') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
 
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
 
     <style>
         body {
@@ -150,7 +163,7 @@ if ($op == 'delete') {
                 <li class="active">
                     <a href="../pembayaran/datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
-                        Data Pembayaran
+                        Daftar Ulang
                     </a>
                 </li>
             </ul>
@@ -167,9 +180,10 @@ if ($op == 'delete') {
             </ul>
         </div>
 
+
         <!-- CONTENT -->
         <div class="content">
-            <nav class="navbar navbar-expand-md ">
+            <nav class="navbar navbar-expand-md">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2">
@@ -186,77 +200,110 @@ if ($op == 'delete') {
 
             <!-- TABLE -->
             <div class="container">
-                <div class="card border-0">
-                    <div class="card-body">
-                        <h1 class="mb-3">Data Daftar Ulang</h1>
-                        <a href="addadministrasi.php" class="btn btn-primary mb-3"><i class="bi bi-clipboard2-plus"></i>&nbsp;Tambah Data</a>
-                        <table id="example" class="display nowrap" style="max-width: 95%;">
-                            <thead>
-                                <tr>
-                                    <th>Id Daftar Ulang</th>
-                                    <th>NISN</th>
-                                    <th>Tanggal</th>
-                                    <th>Jenis Bayar</th>
-                                    <th>Keterangan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $sql2 = "select * from daftar_ulang order by id_daftarulang desc";
-                                $q2 = mysqli_query($koneksi, $sql2);
-                                while ($r2 = mysqli_fetch_array($q2)) {
-                                    $id_daftarulang = $r2['id_daftarulang'];
-                                    $nisn = $r2['nisn'];
-                                    $tanggal = $r2['tanggal'];
-                                    $jenis_bayar = $r2['jenis_bayar'];
-                                    $keterangan = $r2['keterangan'];
-                                    ?>
-                                    <tr>
-                                        <td scope="row">
-                                            <?php echo $id_daftarulang ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $nisn ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $tanggal ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $jenis_bayar ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $keterangan ?>
-                                        </td>
-                                        <td scope="row">
-                                            <a href="editadministrasi.php?op=edit&id_daftarulang=<?php echo $id_daftarulang ?>"
-                                                class="btn btn-warning btn-sm" style="font-weight: 600;"><i
-                                                    class="bi bi-pen"></i>&nbsp;Edit
-                                            </a> |
-                                            <a href="datapembayaran.php?op=delete&id_daftarulang=<?php echo $id_daftarulang ?>"
-                                                onclick="return confirm('Yakin mau hapus data?')"
-                                                class="btn btn-danger btn-sm" style="font-weight: 600;">
-                                                <i class="bi bi-trash"></i>&nbsp;Hapus
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Id Daftar Ulang</th>
-                                    <th>NISN</th>
-                                    <th>Tanggal</th>
-                                    <th>Jenis Bayar</th>
-                                    <th>Keterangan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                <div class="col-md my-4 mx-2">
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-clipboard-data"></i>&nbsp;Daftar Ulang
+                    </h3>
+                </div>
+                <hr>
+                <div class="col-md my-2 mx-2">
+                    <?php
+                    if ($error) {
+                        ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $error ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <?php
+                    if ($sukses) {
+                        ?>
+                        <div class="alert alert-success" role="alert">
+                            <?php echo $sukses ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <div class="col-md my-2 mx-2">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="id_daftarulang" class="form-label">Id Daftar Ulang</label>
+                                <input type="number" class="form-control w-50" id="id_daftarulang"
+                                    placeholder="Masukkan NPSN" name="id_daftarulang"
+                                    value="<?php echo $id_daftarulang ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_pendaftaran">Id Pendaftaran</label>
+                                <div class="col-sm-6 mt-1">
+                                    <select class="form-select" name="id_pendaftaran"
+                                        aria-label="Default select example">
+                                        <option selected>- Pilih Id Pendaftaran -</option>
+                                        <option value="1" <?php if ($id_pendaftaran == "1")
+                                            echo "selected" ?>>
+                                                1</option>
+                                            <option value="2" <?php if ($id_pendaftaran == "2")
+                                            echo "selected" ?>>2
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nisn" class="form-label">NISN</label>
+                                    <input type="text" class="form-control form-control-md w-50" id="nisn"
+                                        placeholder="Masukkan Nama Asal Sekolah" name="nisn" value="<?php echo $nisn ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanggal" class="form-label">Tanggal Pendaftaran</label>
+                                <input type="text" class="form-control form-control-md w-50" id="tanggal" name="tanggal"
+                                    value="<?php echo date('d/m/Y'); ?>" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label>Jenis Kelamin</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="jenis_bayar[]" id="Buku"
+                                        value="Buku">
+                                    <label class="form-check-label" for="Buku">Buku</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="jenis_bayar[]" id="Seragam"
+                                        value="Seragam">
+                                    <label class="form-check-label" for="Seragam">Seragam</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="jenis_bayar[]" id="Alat Tulis"
+                                        value="Alat Tulis">
+                                    <label class="form-check-label" for="Alat Tulis">Alat Tulis</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="keterangan">Keterangan Pembayaran</label>
+                                <div class="col-sm-6 mt-1">
+                                    <select class="form-select" name="keterangan"
+                                        aria-label="Default select example">
+                                        <option selected>- Keterangan -</option>
+                                        <option value="Belum Lunas" <?php if ($keterangan == "Belum Lunas")
+                                            echo "selected" ?>>
+                                                Belum Lunas</option>
+                                            <option value="Lunas" <?php if ($keterangan == "Lunas")
+                                            echo "selected" ?>>Lunas
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            <hr>
+                            <a href="datapembayaran.php" class="btn btn-secondary"><i
+                                    class="bi bi-arrow-left-circle"></i>&nbsp;Kembali
+                            </a> |
+                            <a href="">
+                                <button type="submit" class="btn btn-primary" name="simpan"><i
+                                        class="bi bi-floppy"></i>&nbsp; Simpan</button>
+                            </a>
+                        </form>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -282,7 +329,6 @@ if ($op == 'delete') {
             $('.sidebar').removeClass('active');
         });
     </script>
-
     <!-- Jquery Table -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -298,11 +344,12 @@ if ($op == 'delete') {
             $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel', 'print'
+
                 ]
             });
         });
     </script>
+
 </body>
 
 </html>

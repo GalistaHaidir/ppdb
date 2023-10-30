@@ -4,7 +4,7 @@ session_start();
 $host_db = "localhost";
 $user_db = "root";
 $pass_db = "";
-$nama_db = "ppdb";
+$nama_db = "sekolah";
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 //atur variabel
 $email = "";
@@ -101,11 +101,9 @@ if (isset($_POST['register'])) {
                 <div class="featured-image mb-3">
                     <img src="css/note.png" class="img-fluid" style="width: 250px;">
                 </div>
-                <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Be
-                    Verified</p>
+                <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Selamat Datang Siswa</p>
                 <small class="text-white text-wrap text-center"
-                    style="width: 17rem; font-family: 'Courier New', Courier, monospace;">Join experienced Designers on
-                    this platform</small>
+                    style="width: 17rem; font-family: 'Courier New', Courier, monospace;">Silahkan daftar untuk bisa melakukan login</small>
             </div>
 
             <!-- Right Box -->
@@ -113,8 +111,8 @@ if (isset($_POST['register'])) {
                 <!-- ... (kode HTML sebelumnya) ... -->
                 <div class="row align-items-center">
                     <div class="header-text mb-1">
-                        <h2>Register</h2>
-                        <p>We are happy to have you back.</p>
+                        <h2>Daftar Akun</h2>
+                        <p>Silahkan masukkan email dan password</p>
                     </div>
                     <?php if ($err) { ?>
                         <div id="login-alert" class="alert alert-danger col-sm-12">

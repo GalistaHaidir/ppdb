@@ -17,6 +17,7 @@ if (!$koneksi) {
 $nisn = "";
 $tanggal_pendaftaran = "";
 $username_petugas = "";
+$status = "";
 
 $error = "";
 $sukses = "";
@@ -25,10 +26,11 @@ if (isset($_POST['simpan'])) {
     $nisn = $_POST['nisn'];
     $tanggal_pendaftaran = date('Y-m-d');
     $username_petugas = $_POST['username_petugas'];
+    $status = $_POST['status'];
 
-    if ($nisn && $tanggal_pendaftaran && $username_petugas) {
-        $sql1 = "INSERT INTO pendaftaran (nisn, tanggal_pendaftaran ,username_petugas) 
-        VALUES ('$nisn','$tanggal_pendaftaran', '$username_petugas')";
+    if ($nisn && $tanggal_pendaftaran && $username_petugas && $status) {
+        $sql1 = "INSERT INTO pendaftaran (nisn, tanggal_pendaftaran ,username_petugas, status )  
+        VALUES ('$nisn','$tanggal_pendaftaran', '$username_petugas', '$status')";
 
         $q1 = mysqli_query($koneksi, $sql1);
         if ($q1) {
@@ -155,6 +157,12 @@ if (isset($_POST['simpan'])) {
                         Pendaftaran
                     </a>
                 </li>
+                <li class="">
+                    <a href="pengumuman.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-megaphone"></i>
+                    Pengumuman
+                    </a>
+                </li>
             </ul>
 
             <hr class="h-color mx-2">
@@ -228,6 +236,11 @@ if (isset($_POST['simpan'])) {
                             <label for="username_petugas" class="form-label">Petugas</label>
                             <input type="text" class="form-control form-control-md w-50" id="username_petugas"
                             name="username_petugas" value="admin" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Keterangan</label>
+                            <input type="text" class="form-control form-control-md w-50" id="status"
+                            name="status" value="Belum Diterima" readonly>
                         </div>
                         <hr>
                         <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>

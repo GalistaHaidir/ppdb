@@ -28,7 +28,7 @@ if (isset($_POST['login'])) {
         if (empty($err)) {
             $_SESSION['session_email'] = $email;
             $_SESSION['session_password'] = md5($password);
-            header("location:siswa/Dashboard/dashboardsiswa.php");
+            header("location:siswa/biodata.php");
         }
     }
 }
@@ -90,23 +90,21 @@ if (isset($_POST['login'])) {
 
             <!-- Left Box -->
             <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
-                style="background: #103cbe;">
+                style="background: #198754;">
                 <div class="featured-image mb-3">
                     <img src="css/note.png" class="img-fluid" style="width: 250px;">
                 </div>
-                <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Be
-                    Verified</p>
-                <small class="text-white text-wrap text-center"
-                    style="width: 17rem; font-family: 'Courier New', Courier, monospace;">Join experienced Designers on
-                    this platform</small>
+                <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Hai Siswa</p>
+                <small class="text-white text-wrap text-center mb-2"
+                    style="width: 17rem; font-family: 'Courier New', Courier, monospace;">Silahkan masuk untuk melakukan pengisian formulir pendaftaran</small>
             </div>
 
             <!-- Right Box -->
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-1">
-                        <h2>LOGIN</h2>
-                        <p>We are happy to have you back.</p>
+                        <h2>Login Siswa</h2>
+                        <p>Masuk ke Akun Siswa Anda</p>
                     </div>
                     <?php if ($err) { ?>
                         <div id="login-alert" class="alert alert-danger col-sm-12">
@@ -125,7 +123,7 @@ if (isset($_POST['login'])) {
                             placeholder="Password">
                     </div>
                     <div class="input-group mb-3">
-                        <input type="submit" name="login" class="btn btn-lg btn-primary w-100 fs-6" value="Login">
+                        <input type="submit" name="login" class="btn btn-lg btn-success w-100 fs-6" value="Login">
                     </div>
                     <div class="row">
                         <small>Belum punya akun? <a href="registersiswa.php">Registrasi</a></small>

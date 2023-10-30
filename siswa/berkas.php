@@ -208,6 +208,12 @@ function upload($jenisBerkas)
                         Pendaftaran
                     </a>
                 </li>
+                <li class="">
+                    <a href="pengumuman.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-megaphone"></i>
+                    Pengumuman
+                    </a>
+                </li>
             </ul>
 
             <hr class="h-color mx-2">

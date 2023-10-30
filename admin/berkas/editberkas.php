@@ -200,7 +200,7 @@ function upload($jenisBerkas)
                 <li class="">
                     <a href="../siswa/datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-person-badge"></i>
-                        Data Siswa
+                        Data Calon Siswa
                     </a>
                 </li>
                 <li class="">

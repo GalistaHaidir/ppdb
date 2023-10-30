@@ -142,7 +142,7 @@ if (isset($_GET['id_siswa'])) {
                 <li class="active">
                     <a href="datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-person-badge"></i>
-                        Data Siswa
+                        Data Calon Siswa
                     </a>
                 </li>
                 <li class="">

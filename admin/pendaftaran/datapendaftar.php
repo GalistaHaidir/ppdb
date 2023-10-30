@@ -14,9 +14,17 @@ if (!$koneksi) {
     die("TIdak bisa terkoneksi ke database");
 }
 
+$id_pendaftaran = "";
 $nisn = "";
 $tanggal_pendaftaran = "";
 $username_petugas = "";
+$status = "";
+
+if (isset($_GET['op'])) {
+    $op = $_GET['op'];
+} else {
+    $op = "";
+}
 ?>
 
 <!doctype html>
@@ -108,7 +116,7 @@ $username_petugas = "";
                 <li class="">
                     <a href="../siswa/datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-person-badge"></i>
-                        Data Siswa
+                        Data Calon Siswa
                     </a>
                 </li>
                 <li class="">
@@ -174,25 +182,29 @@ $username_petugas = "";
                         <table id="example" class="display nowrap" style="max-width: 95%;">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
+                                    <th>Id Pendaftar</th>
                                     <th>NISN</th>
                                     <th>Tanggal Pendaftaran</th>
                                     <th>Petugas</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $sql2 = "select * from pendaftaran order by id_pendaftaran desc";
                                 $q2 = mysqli_query($koneksi, $sql2);
-                                $urut = 1;
                                 while ($r2 = mysqli_fetch_array($q2)) {
+                                    $id_pendaftaran = $r2['id_pendaftaran'];
                                     $nisn = $r2['nisn'];
                                     $tanggal_pendaftaran = $r2['tanggal_pendaftaran'];
                                     $username_petugas = $r2['username_petugas'];
+                                    $status = $r2['status'];
                                     ?>
                                     <tr>
                                         <th scope="row">
-                                            <?php echo $urut++ ?>
+                                            <?php echo $id_pendaftaran ?>
                                         </th>
                                         <td scope="row">
                                             <?php echo $nisn ?>
@@ -203,6 +215,15 @@ $username_petugas = "";
                                         <td scope="row">
                                             <?php echo $username_petugas ?>
                                         </td>
+                                        <td scope="row">
+                                            <?php echo $status ?>
+                                        </td>
+                                        <td scope="row">
+                                            <a href="editpendaftar.php?op=edit&id_pendaftaran=<?php echo $id_pendaftaran ?>"
+                                                class="btn btn-warning btn-sm" style="font-weight: 600;"><i
+                                                    class="bi bi-pen"></i>&nbsp;Ubah Status
+                                            </a>
+                                        </td>
                                     </tr>
                                     <?php
                                 }
@@ -210,10 +231,12 @@ $username_petugas = "";
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>No.</th>
+                                    <th>Id Pendaftar</th>
                                     <th>NISN</th>
                                     <th>Tanggal Pendaftaran</th>
                                     <th>Petugas</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -260,7 +283,7 @@ $username_petugas = "";
             $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'excel', 'pdf', 'print'
+                    'excel', 'print'
                 ]
             });
         });

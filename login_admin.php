@@ -4,31 +4,31 @@ session_start();
 $host_db = "localhost";
 $user_db = "root";
 $pass_db = "";
-$nama_db = "ppdb";
+$nama_db = "sekolah";
 $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 //atur variabel
 $err = "";
-$username = "";
+$username_petugas = "";
 
 //error_reporting(0);//
 if (isset($_POST['login'])) {
-    $username = $_POST['username'];
+    $username_petugas = $_POST['username_petugas'];
     $password = $_POST['password'];
-    if ($username == '' or $password == '') {
+    if ($username_petugas == '' or $password == '') {
     } else {
-        $sql1 = "select * from petugas where username = '$username'";
+        $sql1 = "select * from petugas where username_petugas = '$username_petugas'";
         $q1 = mysqli_query($koneksi, $sql1);
         $r1 = mysqli_fetch_array($q1);
 
-        if ($r1['username'] == '') {
-            $err .= "<li>Username <b>$username</b> tidak tersedia</li>";
+        if ($r1['username_petugas'] == '') {
+            $err .= "<li>Username <b>$username_petugas</b> tidak tersedia</li>";
         } elseif ($r1['password'] != md5($password)) {
             $err .= "<li>Password yang dimasukkan tidak sesuai</li>";
         }
         if (empty($err)) {
-            $_SESSION['session_username'] = $username;
+            $_SESSION['session_username_petugas'] = $username_petugas;
             $_SESSION['session_password'] = md5($password);
-            header("location:admin/datapendaftar.php");
+            header("location:admin/pendaftaran/datapendaftar.php");
         }
     }
 }
@@ -117,7 +117,7 @@ if (isset($_POST['login'])) {
                     <?php } ?>
                     <form method="POST">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control form-control-lg bg-light fs-6" name="username"
+                        <input type="text" class="form-control form-control-lg bg-light fs-6" name="username_petugas"
                             placeholder="Email">
                     </div>
                     <div class="input-group mb-4">

@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+date_default_timezone_set('Asia/Jakarta');
+
 //atur koneksi ke database
 $host_db = "localhost";
 $user_db = "root";
@@ -11,38 +14,51 @@ if (!$koneksi) {
     die("TIdak bisa terkoneksi ke database");
 }
 
-$id_ortu = "";
-$no_kk = "";
-$nama_ayah = "";
-$pendidikan_ayah = "";
-$penghasilan_ayah = "";
-$nama_ibu = "";
-$pendidikan_ibu = "";
-$penghasilan_ibu = "";
-$no_hportu = "";
-$alamat_ortu = "";
+$id_pendaftaran = "";
+$nisn = "";
+$tanggal_pendaftaran = "";
+$username_petugas = "";
+$status = "";
 
-if (isset($_GET['id_ortu'])) {
-    $id_ortu = $_GET['id_ortu'];
+$error = "";
+$sukses = "";
 
-    // Query SQL untuk mengambil data siswa berdasarkan id_ortu
-    $query = "SELECT * FROM orang_tua WHERE id_ortu = $id_ortu";
+if (isset($_GET['id_pendaftaran'])) {
+    $id_pendaftaran = $_GET['id_pendaftaran'];
+
+    // Query SQL untuk mengambil data siswa berdasarkan id_pendaftaran
+    $query = "SELECT * FROM pendaftaran WHERE id_pendaftaran = $id_pendaftaran";
     $result = mysqli_query($koneksi, $query);
 
     if ($result) {
         // Mengambil data dari hasil query
         $row = mysqli_fetch_assoc($result);
         if ($row) {
-            $no_kk = $row['no_kk'];
-            $nama_ayah = $row['nama_ayah'];
-            $pendidikan_ayah = $row['pendidikan_ayah'];
-            $penghasilan_ayah = $row['penghasilan_ayah'];
-            $nama_ibu = $row['nama_ibu'];
-            $pendidikan_ibu = $row['pendidikan_ibu'];
-            $penghasilan_ibu = $row['penghasilan_ibu'];
-            $no_hportu = $row['no_hportu'];
-            $alamat_ortu = $row['alamat_ortu'];
+            $nisn = $row['nisn'];
+            $tanggal_pendaftaran = $row['tanggal_pendaftaran'];
+            $username_petugas = $row['username_petugas'];
+            $status = $row['status'];
         }
+    }
+}
+
+if (isset($_POST['simpan'])) {
+    $nisn = $_POST['nisn'];
+    $tanggal_pendaftaran = date('Y-m-d');
+    $username_petugas = $_POST['username_petugas'];
+    $status = $_POST['status'];
+
+    if ($nisn && $tanggal_pendaftaran && $username_petugas && $status) {
+        $sql1 = "UPDATE pendaftaran SET nisn = '$nisn', tanggal_pendaftaran = '$tanggal_pendaftaran', username_petugas = '$username_petugas', status = '$status' WHERE id_pendaftaran = $id_pendaftaran";
+
+        $q1 = mysqli_query($koneksi, $sql1);
+        if ($q1) {
+            $sukses = "Berhasil memasukkan data baru";
+        } else {
+            $error = "Gagal memasukkan data";
+        }
+    } else {
+        $error = "Silahkan masukkan semua data";
     }
 }
 ?>
@@ -59,11 +75,7 @@ if (isset($_GET['id_ortu'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
-
-    <!-- TABLE -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
 
     <style>
         body {
@@ -127,7 +139,7 @@ if (isset($_GET['id_ortu'])) {
                 </button>
             </div>
             <ul class="list-unstyled px-2">
-                <li class="">
+                <li class="active">
                     <a href="../pendaftaran/datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-pencil-square"></i>
                         Data Pendaftar
@@ -139,7 +151,7 @@ if (isset($_GET['id_ortu'])) {
                         Data Calon Siswa
                     </a>
                 </li>
-                <li class="active">
+                <li class="">
                     <a href="dataortu.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-people-fill"></i>
                         Data Orang Tua
@@ -194,89 +206,77 @@ if (isset($_GET['id_ortu'])) {
             </nav>
 
             <!-- TABLE -->
-            <div class="container" id="cetak">
+            <div class="container">
                 <div class="col-md my-4 mx-2">
-                    <h3 class="fw-bold text-uppercase"><i class="bi bi-people-fill"></i>&nbsp;Data Orang Tua Siswa
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-pencil-square"></i>&nbsp;Formulir
+                        Pendaftaran
                     </h3>
                 </div>
                 <hr>
                 <div class="col-md my-2 mx-2">
+                    <?php
+                    if ($error) {
+                        ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $error ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <?php
+                    if ($sukses) {
+                        ?>
+                        <div class="alert alert-success" role="alert">
+                            <?php echo $sukses ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <form action="" method="POST" enctype="multipart/form-data">
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>Nomor Kartu Keluarga</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $no_kk ?>">
-                            </div>
+                        <div class="mb-3">
+                            <label for="nisn" class="form-label">NISN</label>
+                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN"
+                                name="nisn" value="<?php echo $nisn ?>" readonly>
                         </div>
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>Nama Lengkap Ayah</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $nama_ayah ?>">
-                            </div>
+                        <div class="mb-3">
+                            <label for="tanggal_pendaftaran" class="form-label">Tanggal Pendaftaran</label>
+                            <input type="text" class="form-control form-control-md w-50" id="tanggal_pendaftaran"
+                                name="tanggal_pendaftaran" value="<?php echo date('d/m/Y'); ?>" readonly>
                         </div>
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>Pendidikan Terakhir Ayah</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $pendidikan_ayah ?>">
-                            </div>
+                        <div class="mb-3">
+                            <label for="username_petugas" class="form-label">Petugas</label>
+                            <input type="text" class="form-control form-control-md w-50" id="username_petugas"
+                            name="username_petugas" value="admin" readonly>
                         </div>
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>Penghasilkan Perbulan Ayah</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $penghasilan_ayah ?>">
+                        <div class="mb-3">
+                            <label for="status">Keterangan</label>
+                            <div class="col-sm-6 mt-1">
+                                <select class="form-select" name="status" aria-label="Default select example">
+                                    <option selected>- Keterangan -</option>
+                                    <option value="Belum Diterima" <?php if ($status == "Belum Diterima")
+                                        echo "selected" ?>>
+                                            Belum Diterima</option>
+                                        <option value="Diterima" <?php if ($status == "Diterima")
+                                        echo "selected" ?>>Diterima
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>Nama Lengkap Ibu</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $nama_ibu ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>Pendidikan Terakhir Ibu</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $pendidikan_ibu ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>Penghasilan Perbulan Ibu</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $penghasilan_ibu ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>No. Hp Orang Tua</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $no_hportu ?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label"><strong>Alamat</strong></label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly class="form-control-plaintext form-control-md w-100"
-                                    value=": <?php echo $alamat_ortu ?>">
-                            </div>
-                        </div>
+                        <hr>
+                        <a href="datapendaftar.php" class="btn btn-secondary"><i
+                                class="bi bi-arrow-left-circle"></i>&nbsp;Kembali
+                        </a> |
+                        <a href="">
+                            <button type="submit" class="btn btn-primary" name="simpan"><i
+                                    class="bi bi-floppy"></i>&nbsp; Simpan</button>
+                        </a>
                     </form>
                 </div>
             </div>
-            <div class="col-md my-2 mx-4">
-                <hr>
-                <a href="dataortu.php" class="btn btn-secondary"><i class="bi bi-arrow-left-circle"></i>&nbsp;Kembali
-                </a> |
-                <a href="javascript:void(0);" onclick="printPageArea('cetak')" class="btn btn-info"><i
-                        class="bi bi-printer"></i>&nbsp;Cetak
-                </a>
-            </div>
+
+
         </div>
+    </div>
     </div>
 
     <!-- BOOTSTRAP JS-->
@@ -299,15 +299,6 @@ if (isset($_GET['id_ortu'])) {
         $('.close-btn').on('click', function () {
             $('.sidebar').removeClass('active');
         });
-    </script>
-    <script>
-        function printPageArea(areaID) {
-            var printContent = document.getElementById(areaID).innerHTML;
-            var originalContent = document.body.innerHTML;
-            document.body.innerHTML = printContent; // Perbaikan 1
-            window.print();
-            document.body.innerHTML = originalContent; // Perbaikan 2
-        }
     </script>
 
 </body>

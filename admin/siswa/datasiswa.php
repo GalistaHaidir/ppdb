@@ -134,7 +134,7 @@ if ($op == 'delete') {
                 <li class="active">
                     <a href="datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-person-badge"></i>
-                        Data Siswa
+                        Data Calon Siswa
                     </a>
                 </li>
                 <li class="">
@@ -316,7 +316,7 @@ if ($op == 'delete') {
             $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'copy', 'excel', 'pdf', 'print'
+                    'excel', 'print'
                 ]
             });
         });

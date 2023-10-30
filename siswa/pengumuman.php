@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+date_default_timezone_set('Asia/Jakarta');
+
 //atur koneksi ke database
 $host_db = "localhost";
 $user_db = "root";
@@ -11,31 +14,35 @@ if (!$koneksi) {
     die("TIdak bisa terkoneksi ke database");
 }
 
-$id_sekolah = "";
-$npsn = "";
 $nisn = "";
-$nama_sekolah = "";
-$alamat_sekolah = "";
-$telepon_sekolah = "";
+$tanggal_pendaftaran = "";
+$username_petugas = "";
+$status = "";
 
-if(isset($_GET['op'])){
-    $op = $_GET['op'];
-}else{
-    $op = "";
-}
+$error = "";
+$sukses = "";
 
-if ($op == 'delete') {
-    $id_sekolah = $_GET['id_sekolah'];
-    $sql1 = "delete from asal_sekolah where id_sekolah = '$id_sekolah'";
-    $q1 = mysqli_query($koneksi, $sql1);
-    if ($q1) {
-        $sukses = "Berhasil hapus data";
+if (isset($_POST['simpan'])) {
+    $nisn = $_POST['nisn'];
+    $tanggal_pendaftaran = date('Y-m-d');
+    $username_petugas = $_POST['username_petugas'];
+    $status = $_POST['status'];
+
+    if ($nisn && $tanggal_pendaftaran && $username_petugas && $status) {
+        $sql1 = "INSERT INTO pendaftaran (nisn, tanggal_pendaftaran ,username_petugas, status )  
+        VALUES ('$nisn','$tanggal_pendaftaran', '$username_petugas', '$status')";
+
+        $q1 = mysqli_query($koneksi, $sql1);
+        if ($q1) {
+            $sukses = "Berhasil memasukkan data baru";
+        } else {
+            $error = "Gagal memasukkan data";
+        }
     } else {
-        $error = "Gagal melakukan hapus data";
+        $error = "Silahkan masukkan semua data";
     }
 }
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -49,18 +56,24 @@ if ($op == 'delete') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
 
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
+
     <style>
         body {
-            background: white;
+            background: ##fff;
+        }
+
+        .sidebar {
+            border-right: 1px solid #000;
         }
 
         #side_nav {
-            background: #000000;
+            background: #f7f7f7;
             min-width: 250px;
             max-width: 250px;
         }
@@ -70,19 +83,23 @@ if ($op == 'delete') {
             width: 100%;
         }
 
-
         hr.h-color {
-            background: #edeeff;
+            background: #333;
             height: 1.2px;
         }
 
         .sidebar li.active {
-            background: #474747;
+            background: #23663b;
             border-radius: 8px;
         }
 
+        .sidebar li.active a,
+        .sidebar li.active a:hover {
+            color: #ffffff;
+        }
+
         .sidebar li a {
-            color: #fff;
+            color: #333;
         }
 
         @media(max-width: 767px) {
@@ -107,49 +124,48 @@ if ($op == 'delete') {
         <div class="sidebar" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4">
-                <span class="rounded shadow px-2"
-                        style="background-color: #258a31; color:#fff"><strong>PPDB</strong></span>
-                    <span class="text-white">Admin</span>
+                    <span class="rounded shadow px-2" style="background-color: #247854; color:#fff">PPDB</span>
+                    <span class="text-dark">Siswa</span>
                 </h1>
-                <button class="btn d-md-none d-block close-btn px-1 py-0 text-white">
+                <button class="btn d-md-none d-block close-btn px-1 py-0 text-dark">
                     <i class="bi bi-list-nested"></i>
                 </button>
             </div>
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../pendaftaran/datapendaftar.php" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-pencil-square"></i>
-                        Data Pendaftar
+                    <a href="biodata.php" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-person-badge"></i>
+                        Data Diri
                     </a>
                 </li>
                 <li class="">
-                    <a href="../siswa/datasiswa.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-person-badge"></i>
-                        Data Calon Siswa
-                    </a>
-                </li>
-                <li class="">
-                    <a href="../ortu/dataortu.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-people-fill"></i>
+                    <a href="orangtua.php" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
                 </li>
+                <li class="">
+                    <a href="sekolah.php" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-building"></i>
+                        Data Asal Sekolah
+                    </a>
+                </li>
+                <li class="">
+                    <a href="berkas.php" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-filetype-pdf"></i>
+                        Berkas
+                    </a>
+                </li>
+                <li class="">
+                    <a href="pendaftaran.php" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-pencil-square"></i>
+                        Pendaftaran
+                    </a>
+                </li>
                 <li class="active">
-                    <a href="datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-building"></i>
-                        Data Sekolah
-                    </a>
-                </li>
-                <li class="">
-                    <a href="../berkas/databerkas.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-filetype-pdf"></i>
-                        Data Berkas
-                    </a>
-                </li>
-                <li class="">
-                    <a href="../pembayaran/datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
-                        <i class="bi bi-clipboard-data"></i>
-                        Data Pembayaran
+                    <a href="pengumuman.php" class="text-decoration-none px-3 py-3 d-block">
+                        <i class="bi bi-megaphone"></i>
+                        Pengumuman
                     </a>
                 </li>
             </ul>
@@ -158,7 +174,7 @@ if ($op == 'delete') {
 
             <ul class="list-unstyled px-2">
                 <li class="">
-                    <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
+                    <a href="../logout_siswa.php" class="text-decoration-none px-3 py-2 d-block">
                         <i class="bi bi-door-closed"></i>
                         Logout
                     </a>
@@ -183,69 +199,38 @@ if ($op == 'delete') {
                 </div>
             </nav>
 
-            <!-- TABLE -->
             <div class="container">
                 <div class="card border-0">
                     <div class="card-body">
-                        <h1 class="mb-3">Data Asal Sekolah</h1>
+                        <h1 class="mb-3">Pengumuman</h1>
                         <table id="example" class="display nowrap" style="max-width: 95%;">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>NISN</th>
-                                    <th>NPSN</th>
-                                    <th>Nama Sekolah</th>
-                                    <th>Alamat Sekolah</th>
-                                    <th>Telepon</th>
-                                    <th>Aksi</th>
+                                    <th>NISN <i class="bi bi-list-ol"></i></th>
+                                    <th>Tanggal Pendaftaran <i class="bi bi-calendar-date"></i></th>
+                                    <th>Status <i class="bi bi-megaphone"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql2 = "select * from asal_sekolah order by id_sekolah desc";
+                                $sql2 = "select * from pendaftaran order by id_pendaftaran desc";
                                 $q2 = mysqli_query($koneksi, $sql2);
-                                $urut = 1;
                                 while ($r2 = mysqli_fetch_array($q2)) {
-                                    $id_sekolah = $r2['id_sekolah'];
+                                    $id_pendaftaran = $r2['id_pendaftaran'];
                                     $nisn = $r2['nisn'];
-                                    $npsn = $r2['npsn'];
-                                    $nama_sekolah = $r2['nama_sekolah'];
-                                    $alamat_sekolah = $r2['alamat_sekolah'];
-                                    $telepon_sekolah = $r2['telepon_sekolah'];
+                                    $tanggal_pendaftaran = $r2['tanggal_pendaftaran'];
+                                    $username_petugas = $r2['username_petugas'];
+                                    $status = $r2['status'];
                                     ?>
                                     <tr>
-                                        <th scope="row">
-                                            <?php echo $urut++ ?>
-                                        </th>
                                         <td scope="row">
-                                            <?php echo $nisn?>
+                                            <?php echo $nisn ?>
                                         </td>
                                         <td scope="row">
-                                            <?php echo $npsn ?>
+                                            <?php echo $tanggal_pendaftaran ?>
                                         </td>
                                         <td scope="row">
-                                            <?php echo $nama_sekolah ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $alamat_sekolah ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $telepon_sekolah ?>
-                                        </td>
-                                        <td scope="row">
-                                            <a href="detailsekolah.php?op=edit&id_sekolah=<?php echo $id_sekolah ?>"
-                                                class="btn btn-success btn-sm" style="font-weight: 600;"><i
-                                                    class="bi bi-info-circle"></i>&nbsp;Detail
-                                            </a> |
-                                            <a href="editsekolah.php?op=edit&id_sekolah=<?php echo $id_sekolah ?>"
-                                                class="btn btn-warning btn-sm" style="font-weight: 600;"><i
-                                                    class="bi bi-pen"></i>&nbsp;Edit
-                                            </a> |
-                                            <a href="datasekolah.php?op=delete&id_sekolah=<?php echo $id_sekolah ?>"
-                                                onclick="return confirm('Yakin mau hapus data?')"
-                                                class="btn btn-danger btn-sm" style="font-weight: 600;">
-                                                <i class="bi bi-trash"></i>&nbsp;Hapus
-                                            </a>
+                                            <?php echo $status ?>
                                         </td>
                                     </tr>
                                     <?php
@@ -254,13 +239,9 @@ if ($op == 'delete') {
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>NISN</th>
-                                    <th>NPSN</th>
-                                    <th>Nama Sekolah</th>
-                                    <th>Alamat Sekolah</th>
-                                    <th>Telepon</th>
-                                    <th>Aksi</th>
+                                <th>NISN <i class="bi bi-list-ol"></i></th>
+                                    <th>Tanggal Pendaftaran <i class="bi bi-calendar-date"></i></th>
+                                    <th>Status <i class="bi bi-megaphone"></i></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -268,6 +249,7 @@ if ($op == 'delete') {
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- BOOTSTRAP JS-->
@@ -291,7 +273,6 @@ if ($op == 'delete') {
             $('.sidebar').removeClass('active');
         });
     </script>
-
     <!-- Jquery Table -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -307,11 +288,12 @@ if ($op == 'delete') {
             $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel', 'print'
+
                 ]
             });
         });
     </script>
+
 </body>
 
 </html>
