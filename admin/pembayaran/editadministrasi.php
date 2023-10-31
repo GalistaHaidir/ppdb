@@ -186,6 +186,18 @@ if (isset($_POST['simpan'])) {
                         Daftar Ulang
                     </a>
                 </li>
+                <li class="">
+                    <a href="../kelas/datakelas.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-door-open"></i>
+                        Data Kelas
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../siswabaru/datasiswabaru.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-person-arms-up"></i>
+                        Data Siswa Baru
+                    </a>
+                </li>
             </ul>
 
             <hr class="h-color mx-2">
@@ -193,7 +205,7 @@ if (isset($_POST['simpan'])) {
             <ul class="list-unstyled px-2">
                 <li class="">
                     <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
-                        <i class="bi bi-door-closed"></i>
+                    <i class="bi bi-box-arrow-right"></i>
                         Logout
                     </a>
                 </li>
@@ -250,27 +262,18 @@ if (isset($_POST['simpan'])) {
                                 <label for="id_daftarulang" class="form-label">Id Daftar Ulang</label>
                                 <input type="number" class="form-control w-50" id="id_daftarulang"
                                     placeholder="Masukkan NPSN" name="id_daftarulang"
-                                    value="<?php echo $id_daftarulang ?>">
+                                    value="<?php echo $id_daftarulang ?>" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="id_pendaftaran">Id Pendaftaran</label>
-                                <div class="col-sm-6 mt-1">
-                                    <select class="form-select" name="id_pendaftaran"
-                                        aria-label="Default select example">
-                                        <option selected>- Pilih Id Pendaftaran -</option>
-                                        <option value="1" <?php if ($id_pendaftaran == "1")
-                                            echo "selected" ?>>
-                                                1</option>
-                                            <option value="2" <?php if ($id_pendaftaran == "2")
-                                            echo "selected" ?>>2
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <label for="id_pendaftaran" class="form-label">Id Pendaftaran</label>
+                                <input type="number" class="form-control w-50" id="id_pendaftaran"
+                                    placeholder="Masukkan Id Pendaftaran" name="id_pendaftaran"
+                                    value="<?php echo $id_pendaftaran ?>" readonly>
+                            </div>
                                 <div class="mb-3">
                                     <label for="nisn" class="form-label">NISN</label>
                                     <input type="text" class="form-control form-control-md w-50" id="nisn"
-                                        placeholder="Masukkan Nama Asal Sekolah" name="nisn" value="<?php echo $nisn ?>">
+                                        placeholder="Masukkan Nama Asal Sekolah" name="nisn" value="<?php echo $nisn ?>" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="tanggal" class="form-label">Tanggal Pendaftaran</label>

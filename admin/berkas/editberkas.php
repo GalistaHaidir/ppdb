@@ -224,7 +224,19 @@ function upload($jenisBerkas)
                 <li class="">
                     <a href="datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
-                        Data Pembayaran
+                        Daftar Ulang
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../kelas/datakelas.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-door-open"></i>
+                        Data Kelas
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../siswabaru/datasiswabaru.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-person-arms-up"></i>
+                        Data Siswa Baru
                     </a>
                 </li>
             </ul>
@@ -234,7 +246,7 @@ function upload($jenisBerkas)
             <ul class="list-unstyled px-2">
                 <li class="">
                     <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
-                        <i class="bi bi-door-closed"></i>
+                    <i class="bi bi-box-arrow-right"></i>
                         Logout
                     </a>
                 </li>
@@ -293,7 +305,7 @@ function upload($jenisBerkas)
                             <label for="nisn" class="form-label">NISN</label>
                             <input type="number" class="form-control w-50" id="nisn"
                                 placeholder="Masukkan NISN untuk kebutuhan Database" name="nisn"
-                                value="<?php echo $nisn ?>">
+                                value="<?php echo $nisn ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="jalur">Jalur</label>

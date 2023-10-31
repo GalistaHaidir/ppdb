@@ -160,7 +160,19 @@ if (isset($_GET['id_ortu'])) {
                 <li class="">
                     <a href="../pembayaran/datapembayaran.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-clipboard-data"></i>
-                        Data Pembayaran
+                        Daftar Ulang
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../kelas/datakelas.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-door-open"></i>
+                        Data Kelas
+                    </a>
+                </li>
+                <li class="">
+                    <a href="../siswabaru/datasiswabaru.php" class="text-decoration-none px-3 py-3 d-block">
+                    <i class="bi bi-person-arms-up"></i>
+                        Data Siswa Baru
                     </a>
                 </li>
             </ul>
@@ -170,7 +182,7 @@ if (isset($_GET['id_ortu'])) {
             <ul class="list-unstyled px-2">
                 <li class="">
                     <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
-                        <i class="bi bi-door-closed"></i>
+                    <i class="bi bi-box-arrow-right"></i>
                         Logout
                     </a>
                 </li>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Jakarta');
 //atur koneksi ke database
 $host_db = "localhost";
 $user_db = "root";
@@ -10,36 +11,36 @@ $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 if (!$koneksi) {
     die("TIdak bisa terkoneksi ke database");
 }
-$id_ortu = "";
-$no_kk = "";
-$nama_ayah = "";
-$pendidikan_ayah = "";
-$penghasilan_ayah = "";
-$nama_ibu = "";
-$pendidikan_ibu = "";
-$penghasilan_ibu = "";
-$no_hportu = "";
-$alamat_ortu = "";
 
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-} else {
-    $op = "";
-}
+$nisn = "";
+$nama_siswa = "";
+$absen = "";
+$nama_kelas = "";
 
-if ($op == 'delete') {
-    $id_ortu = $_GET['id_ortu'];
-    $sql1 = "delete from orang_tua where id_ortu = '$id_ortu'";
-    $q1 = mysqli_query($koneksi, $sql1);
-    if ($q1) {
-        $sukses = "Berhasil hapus data";
+$error = "";
+$sukses = "";
+
+if (isset($_POST['simpan'])) {
+    $nisn = $_POST['nisn'];
+    $nama_siswa = $_POST['nama_siswa'];
+    $absen = $_POST['absen'];
+    $nama_kelas = $_POST['nama_kelas'];
+
+    if ($nisn && $nama_siswa && $absen && $nama_kelas) {
+        $sql1 = "INSERT INTO siswa_baru (nisn, nama_siswa ,absen, nama_kelas )  
+        VALUES ('$nisn','$nama_siswa', '$absen', '$nama_kelas')";
+
+        $q1 = mysqli_query($koneksi, $sql1);
+        if ($q1) {
+            $sukses = "Berhasil memasukkan data baru";
+        } else {
+            $error = "Gagal memasukkan data";
+        }
     } else {
-        $error = "Gagal melakukan hapus data";
+        $error = "Silahkan masukkan semua data";
     }
 }
-
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -53,11 +54,12 @@ if ($op == 'delete') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
 
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
 
     <style>
         body {
@@ -133,8 +135,8 @@ if ($op == 'delete') {
                         Data Calon Siswa
                     </a>
                 </li>
-                <li class="active">
-                    <a href="dataortu.php" class="text-decoration-none px-3 py-3 d-block">
+                <li class="">
+                    <a href="../ortu/dataortu.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
@@ -163,7 +165,7 @@ if ($op == 'delete') {
                         Data Kelas
                     </a>
                 </li>
-                <li class="">
+                <li class="active">
                     <a href="../siswabaru/datasiswabaru.php" class="text-decoration-none px-3 py-3 d-block">
                     <i class="bi bi-person-arms-up"></i>
                         Data Siswa Baru
@@ -183,9 +185,10 @@ if ($op == 'delete') {
             </ul>
         </div>
 
+
         <!-- CONTENT -->
         <div class="content">
-            <nav class="navbar navbar-expand-md ">
+            <nav class="navbar navbar-expand-md">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2">
@@ -202,81 +205,70 @@ if ($op == 'delete') {
 
             <!-- TABLE -->
             <div class="container">
-                <div class="card border-0">
-                    <div class="card-body">
-                        <h1 class="mb-3">Data Orang Tua</h1>
-                        <table id="example" class="display nowrap" style="max-width: 95%;">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nama Ayah</th>
-                                    <th>Nama Ibu</th>
-                                    <th>Telepon</th>
-                                    <th>Alamat</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $sql2 = "select * from orang_tua order by id_ortu desc";
-                                $q2 = mysqli_query($koneksi, $sql2);
-                                $urut = 1;
-                                while ($r2 = mysqli_fetch_array($q2)) {
-                                    $id_ortu = $r2['id_ortu'];
-                                    $nama_ayah = $r2['nama_ayah'];
-                                    $nama_ibu = $r2['nama_ibu'];
-                                    $no_hportu = $r2['no_hportu'];
-                                    $alamat_ortu = $r2['alamat_ortu'];
-                                    ?>
-                                    <tr>
-                                        <th scope="row">
-                                            <?php echo $urut++ ?>
-                                        </th>
-                                        <td scope="row">
-                                            <?php echo $nama_ayah ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $nama_ibu ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $no_hportu ?>
-                                        </td>
-                                        <td scope="row">
-                                            <?php echo $alamat_ortu ?>
-                                        </td>
-                                        <td scope="row">
-                                            <a href="detailortu.php?op=edit&id_ortu=<?php echo $id_ortu ?>"
-                                                class="btn btn-success btn-sm" style="font-weight: 600;"><i
-                                                    class="bi bi-info-circle"></i>&nbsp;Detail
-                                            </a> |
-                                            <a href="editortu.php?op=edit&id_ortu=<?php echo $id_ortu ?>"
-                                                class="btn btn-warning btn-sm" style="font-weight: 600;"><i
-                                                    class="bi bi-pen"></i>&nbsp;Edit
-                                            </a> |
-                                            <a href="dataortu.php?op=delete&id_ortu=<?php echo $id_ortu ?>"
-                                                onclick="return confirm('Yakin mau hapus data?')"
-                                                class="btn btn-danger btn-sm" style="font-weight: 600;">
-                                                <i class="bi bi-trash"></i>&nbsp;Hapus
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nama Ayah</th>
-                                    <th>Nama Ibu</th>
-                                    <th>Telepon</th>
-                                    <th>Alamat</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                <div class="col-md my-4 mx-2">
+                    <h3 class="fw-bold text-uppercase"><i class="bi bi-person-arms-up"></i>&nbsp;Tambah Siswa Baru
+                    </h3>
+                </div>
+                <hr>
+                <div class="col-md my-2 mx-2">
+                    <?php
+                    if ($error) {
+                        ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $error ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <?php
+                    if ($sukses) {
+                        ?>
+                        <div class="alert alert-success" role="alert">
+                            <?php echo $sukses ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <div class="col-md my-2 mx-2">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="nisn" class="form-label">NISN</label>
+                                <input type="number" class="form-control w-50" id="nisn"
+                                    placeholder="Masukkan NISN" name="nisn"
+                                    value="<?php echo $nisn ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama_siswa" class="form-label">Nama Siswa</label>
+                                <input type="text" class="form-control w-50" id="nama_siswa"
+                                    placeholder="Masukkan Nama Siswa Baru" name="nama_siswa"
+                                    value="<?php echo $nama_siswa ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="absen" class="form-label">Nomor Absen</label>
+                                <input type="number" class="form-control w-50" id="absen"
+                                    placeholder="Masukkan Nomor Absen" name="absen"
+                                    value="<?php echo $absen ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama_kelas" class="form-label">Nama Kelas</label>
+                                <input type="text" class="form-control w-50" id="nama_kelas"
+                                    placeholder="Masukkan Nama Kelas" name="nama_kelas"
+                                    value="<?php echo $nama_kelas ?>">
+                            </div>
+
+                            <hr>
+                            <a href="datasiswabaru.php" class="btn btn-secondary"><i
+                                    class="bi bi-arrow-left-circle"></i>&nbsp;Kembali
+                            </a> |
+                            <a href="">
+                                <button type="submit" class="btn btn-primary" name="simpan"><i
+                                        class="bi bi-floppy"></i>&nbsp; Simpan</button>
+                            </a>
+                        </form>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -302,7 +294,6 @@ if ($op == 'delete') {
             $('.sidebar').removeClass('active');
         });
     </script>
-
     <!-- Jquery Table -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -318,11 +309,12 @@ if ($op == 'delete') {
             $('#example').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'excel', 'print'
+
                 ]
             });
         });
     </script>
+
 </body>
 
 </html>

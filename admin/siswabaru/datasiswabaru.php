@@ -10,16 +10,13 @@ $koneksi = mysqli_connect($host_db, $user_db, $pass_db, $nama_db);
 if (!$koneksi) {
     die("TIdak bisa terkoneksi ke database");
 }
-$id_ortu = "";
-$no_kk = "";
-$nama_ayah = "";
-$pendidikan_ayah = "";
-$penghasilan_ayah = "";
-$nama_ibu = "";
-$pendidikan_ibu = "";
-$penghasilan_ibu = "";
-$no_hportu = "";
-$alamat_ortu = "";
+
+$id_siswabaru = "";
+$nisn = "";
+$nama_siswa = "";
+$absen = "";
+$nama_kelas = "";
+
 
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
@@ -28,8 +25,8 @@ if (isset($_GET['op'])) {
 }
 
 if ($op == 'delete') {
-    $id_ortu = $_GET['id_ortu'];
-    $sql1 = "delete from orang_tua where id_ortu = '$id_ortu'";
+    $id_siswabaru = $_GET['id_siswabaru'];
+    $sql1 = "delete from siswa_baru where id_siswabaru = '$id_siswabaru'";
     $q1 = mysqli_query($koneksi, $sql1);
     if ($q1) {
         $sukses = "Berhasil hapus data";
@@ -37,7 +34,6 @@ if ($op == 'delete') {
         $error = "Gagal melakukan hapus data";
     }
 }
-
 ?>
 
 <!doctype html>
@@ -58,7 +54,6 @@ if ($op == 'delete') {
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
-
     <style>
         body {
             background: white;
@@ -133,14 +128,14 @@ if ($op == 'delete') {
                         Data Calon Siswa
                     </a>
                 </li>
-                <li class="active">
-                    <a href="dataortu.php" class="text-decoration-none px-3 py-3 d-block">
+                <li class="">
+                    <a href="../ortu/dataortu.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-people-fill"></i>
                         Data Orang Tua
                     </a>
                 </li>
                 <li class="">
-                    <a href="../sekolah/datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-building"></i>
                         Data Sekolah
                     </a>
@@ -159,13 +154,13 @@ if ($op == 'delete') {
                 </li>
                 <li class="">
                     <a href="../kelas/datakelas.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-door-open"></i>
+                        <i class="bi bi-door-open"></i>
                         Data Kelas
                     </a>
                 </li>
-                <li class="">
+                <li class="active">
                     <a href="../siswabaru/datasiswabaru.php" class="text-decoration-none px-3 py-3 d-block">
-                    <i class="bi bi-person-arms-up"></i>
+                        <i class="bi bi-person-arms-up"></i>
                         Data Siswa Baru
                     </a>
                 </li>
@@ -176,7 +171,7 @@ if ($op == 'delete') {
             <ul class="list-unstyled px-2">
                 <li class="">
                     <a href="../../logout_admin.php" class="text-decoration-none px-3 py-2 d-block">
-                    <i class="bi bi-box-arrow-right"></i>
+                        <i class="bi bi-box-arrow-right"></i>
                         Logout
                     </a>
                 </li>
@@ -185,7 +180,7 @@ if ($op == 'delete') {
 
         <!-- CONTENT -->
         <div class="content">
-            <nav class="navbar navbar-expand-md ">
+            <nav class="navbar navbar-expand-md">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2">
@@ -204,56 +199,53 @@ if ($op == 'delete') {
             <div class="container">
                 <div class="card border-0">
                     <div class="card-body">
-                        <h1 class="mb-3">Data Orang Tua</h1>
+                        <h1 class="mb-3">Data Siswa Baru</h1>
+                        <a href="addsiswabaru.php" class="btn btn-primary mb-3"><i class="bi bi-person-arms-up"></i>&nbsp;Tambah Data Siswa</a>
                         <table id="example" class="display nowrap" style="max-width: 95%;">
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Nama Ayah</th>
-                                    <th>Nama Ibu</th>
-                                    <th>Telepon</th>
-                                    <th>Alamat</th>
+                                    <th>NISN</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Nomor Absen</th>
+                                    <th>Kelas</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql2 = "select * from orang_tua order by id_ortu desc";
+                                $sql2 = "select * from siswa_baru order by id_siswabaru desc";
                                 $q2 = mysqli_query($koneksi, $sql2);
                                 $urut = 1;
                                 while ($r2 = mysqli_fetch_array($q2)) {
-                                    $id_ortu = $r2['id_ortu'];
-                                    $nama_ayah = $r2['nama_ayah'];
-                                    $nama_ibu = $r2['nama_ibu'];
-                                    $no_hportu = $r2['no_hportu'];
-                                    $alamat_ortu = $r2['alamat_ortu'];
+                                    $id_siswabaru = $r2['id_siswabaru'];
+                                    $nisn = $r2['nisn'];
+                                    $nama_siswa = $r2['nama_siswa'];
+                                    $absen = $r2['absen'];
+                                    $nama_kelas = $r2['nama_kelas'];
                                     ?>
                                     <tr>
                                         <th scope="row">
                                             <?php echo $urut++ ?>
                                         </th>
                                         <td scope="row">
-                                            <?php echo $nama_ayah ?>
+                                            <?php echo $nisn ?>
                                         </td>
                                         <td scope="row">
-                                            <?php echo $nama_ibu ?>
+                                            <?php echo $nama_siswa ?>
                                         </td>
                                         <td scope="row">
-                                            <?php echo $no_hportu ?>
+                                            <?php echo $absen ?>
                                         </td>
                                         <td scope="row">
-                                            <?php echo $alamat_ortu ?>
+                                            <?php echo $nama_kelas ?>
                                         </td>
                                         <td scope="row">
-                                            <a href="detailortu.php?op=edit&id_ortu=<?php echo $id_ortu ?>"
-                                                class="btn btn-success btn-sm" style="font-weight: 600;"><i
-                                                    class="bi bi-info-circle"></i>&nbsp;Detail
-                                            </a> |
-                                            <a href="editortu.php?op=edit&id_ortu=<?php echo $id_ortu ?>"
+                                            <a href="editsiswabaru.php?op=edit&id_siswabaru=<?php echo $id_siswabaru ?>"
                                                 class="btn btn-warning btn-sm" style="font-weight: 600;"><i
                                                     class="bi bi-pen"></i>&nbsp;Edit
                                             </a> |
-                                            <a href="dataortu.php?op=delete&id_ortu=<?php echo $id_ortu ?>"
+                                            <a href="datasiswabaru.php?op=delete&id_siswabaru=<?php echo $id_siswabaru ?>"
                                                 onclick="return confirm('Yakin mau hapus data?')"
                                                 class="btn btn-danger btn-sm" style="font-weight: 600;">
                                                 <i class="bi bi-trash"></i>&nbsp;Hapus
@@ -267,10 +259,10 @@ if ($op == 'delete') {
                             <tfoot>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Nama Ayah</th>
-                                    <th>Nama Ibu</th>
-                                    <th>Telepon</th>
-                                    <th>Alamat</th>
+                                    <th>NISN</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Nomor Absen</th>
+                                    <th>Kelas</th>
                                     <th>Aksi</th>
                                 </tr>
                             </tfoot>

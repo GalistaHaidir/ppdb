@@ -90,23 +90,21 @@ if (isset($_POST['login'])) {
 
             <!-- Left Box -->
             <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
-                style="background: #103cbe;">
+                style="background: #968c00;">
                 <div class="featured-image mb-3">
                     <img src="css/note.png" class="img-fluid" style="width: 250px;">
                 </div>
-                <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Be
-                    Verified</p>
+                <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Silahkan Login</p>
                 <small class="text-white text-wrap text-center"
-                    style="width: 17rem; font-family: 'Courier New', Courier, monospace;">Join experienced Designers on
-                    this platform</small>
+                    style="width: 17rem; font-family: 'Courier New', Courier, monospace;">Untuk bisa mengakses web PPDB</small>
             </div>
 
             <!-- Right Box -->
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-1">
-                        <h2>Hello</h2>
-                        <p>We are happy to have you back.</p>
+                        <h2>Hello Admin</h2>
+                        <p>Selamat Datang, Selamat Bertugas</p>
                     </div>
                     <?php if ($err) { ?>
                         <div id="login-alert" class="alert alert-danger col-sm-12">
@@ -125,7 +123,7 @@ if (isset($_POST['login'])) {
                             placeholder="Password">
                     </div>
                     <div class="input-group mb-3">
-                        <input type="submit" name="login" class="btn btn-lg btn-primary w-100 fs-6" value="Login">
+                        <input type="submit" name="login" class="btn btn-lg btn-warning w-100 fs-6" value="Login">
                     </div>
                     </form>
                 </div>
