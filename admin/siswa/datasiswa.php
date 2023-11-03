@@ -57,7 +57,7 @@ if ($op == 'delete') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
 
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">

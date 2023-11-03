@@ -49,7 +49,7 @@ if ($op == 'delete') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
 
     <!-- TABLE -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -135,7 +135,7 @@ if ($op == 'delete') {
                     </a>
                 </li>
                 <li class="">
-                    <a href="datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
+                    <a href="../sekolah/datasekolah.php" class="text-decoration-none px-3 py-3 d-block">
                         <i class="bi bi-building"></i>
                         Data Sekolah
                     </a>

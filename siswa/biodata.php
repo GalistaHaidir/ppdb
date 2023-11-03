@@ -67,7 +67,7 @@ if (isset($_POST['simpan'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
 
     <style>
         body {
@@ -240,7 +240,7 @@ if (isset($_POST['simpan'])) {
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control form-control-md w-50" id="email"
-                                    placeholder="Masukkan Email" name="email" value="<?php echo $email ?>">
+                                    placeholder="Masukkan Email Sesuai dengan Email Akun" name="email" value="<?php echo $email ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="nisn" class="form-label">NISN</label>

@@ -63,7 +63,7 @@ if (isset($_POST['simpan'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
 
     <style>
         body {
@@ -230,7 +230,7 @@ if (isset($_POST['simpan'])) {
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="no_kk" class="form-label">Nomor Kartu Keluarga</label>
-                            <input type="text" class="form-control w-50" id="no_kk" placeholder="Masukkan Nomor KK"
+                            <input type="text" class="form-control w-50" id="no_kk" placeholder="Masukkan Nomor KK yang Sama dengan Form Data Diri"
                                 name="no_kk" value="<?php echo $no_kk?>">
                         </div>
                         <div class="mb-3">

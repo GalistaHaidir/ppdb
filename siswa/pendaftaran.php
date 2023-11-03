@@ -56,7 +56,7 @@ if (isset($_POST['simpan'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" href="../../css/ui.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../css/ui.png" type="image/x-icon">
 
     <style>
         body {
@@ -224,7 +224,7 @@ if (isset($_POST['simpan'])) {
                     <form action="" method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="nisn" class="form-label">NISN</label>
-                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN"
+                            <input type="number" class="form-control w-50" id="nisn" placeholder="Masukkan NISN untuk Keperluan Database"
                                 name="nisn" value="<?php echo $nisn ?>">
                         </div>
                         <div class="mb-3">

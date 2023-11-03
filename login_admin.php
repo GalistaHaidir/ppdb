@@ -116,7 +116,7 @@ if (isset($_POST['login'])) {
                     <form method="POST">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control form-control-lg bg-light fs-6" name="username_petugas"
-                            placeholder="Email">
+                            placeholder="Username">
                     </div>
                     <div class="input-group mb-4">
                         <input type="password" class="form-control form-control-lg bg-light fs-6" name="password"
